@@ -185,5 +185,23 @@ namespace ApiTest.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        public void GetGraph2(string start, string end)
+        {
+            try
+            {
+                IEnumerable<FeedBack> List1 = GraphBy1(start, end);
+                IEnumerable<FeedBack> List2 = GraphBy1(start, end);
+                if (List1 == null || List2 == null)
+                {
+                    throw new Exception("You must to write the information");
+                }
+                var Happy = List1.Count();
+                var Sad = List2.Count();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
