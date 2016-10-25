@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using ApiTest;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -84,9 +80,9 @@ namespace ApiTest.Controllers
 
             byte[] hashBytes = encrypted.Hash;
 
-            string EncryptedPassword = BitConverter.ToString(hashBytes);
+            string encryptedPassword = BitConverter.ToString(hashBytes);
 
-            return EncryptedPassword;
+            return encryptedPassword;
         }
 
         
