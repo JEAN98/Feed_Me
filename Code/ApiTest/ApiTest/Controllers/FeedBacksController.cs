@@ -150,16 +150,17 @@ namespace ApiTest.Controllers
                 var splitValues0 = startDate.Split('-').Select(x => Int32.Parse(x));
                 var start = new DateTime(splitValues0.ElementAt(0), splitValues0.ElementAt(01),
                     splitValues0.ElementAt(02));
-
+                
                 var splitValues1 = endDate.Split('-').Select(x => Int32.Parse(x));
                 var end = new DateTime(splitValues1.ElementAt(0), splitValues1.ElementAt(01), splitValues1.ElementAt(02));
 
-
+                
                   result = db.FeedBacks
                     .Where(x => x.CreationDate >= start &&
                                 x.CreationDate <= end && x.Face == 1)
                     .ToList();
-            }
+
+             }
             catch (Exception exception)
             {
                 throw new InvalidOperationException(exception.Message);
