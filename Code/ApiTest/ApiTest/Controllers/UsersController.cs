@@ -175,6 +175,22 @@ namespace ApiTest.Controllers
             return Ok(user);
         }
 
+        // DELETE: api/Users/5
+        [ResponseType(typeof(User))]
+        public IHttpActionResult DeleteUser2(int id)
+        {
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            db.Users.Remove(user);
+            db.SaveChanges();
+
+            return Ok(user);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
