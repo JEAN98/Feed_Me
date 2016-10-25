@@ -147,7 +147,6 @@ namespace ApiTest.Controllers
 
             try
             {
-
                 var splitValues0 = startDate.Split('-').Select(x => Int32.Parse(x));
                 var start = new DateTime(splitValues0.ElementAt(0), splitValues0.ElementAt(01),
                     splitValues0.ElementAt(02));
@@ -156,7 +155,7 @@ namespace ApiTest.Controllers
                 var end = new DateTime(splitValues1.ElementAt(0), splitValues1.ElementAt(01), splitValues1.ElementAt(02));
 
 
-                result = db.FeedBacks
+                  result = db.FeedBacks
                     .Where(x => x.CreationDate >= start &&
                                 x.CreationDate <= end && x.Face == 1)
                     .ToList();
@@ -165,9 +164,7 @@ namespace ApiTest.Controllers
             {
                 throw new InvalidOperationException(exception.Message);
             }
-        
-
-        return result;
+           return result;
         }
 
         public void GetGraph(string start, string end)
@@ -188,27 +185,5 @@ namespace ApiTest.Controllers
                 throw new Exception(ex.Message);
             }
         }
-
-        public void GetGraph2(string end, string start)
-        {
-            try
-            {
-                IEnumerable<FeedBack> List1 = GraphBy1(start, end);
-                IEnumerable<FeedBack> List2 = GraphBy1(start, end);
-                if (List1 == null || List2 == null)
-                {
-                    throw new Exception("You must to write the information");
-                }
-                var Happy = List1.Count();
-                var Sad = List2.Count();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
-
-        }
-
     }
 }
