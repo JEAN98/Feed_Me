@@ -16,8 +16,8 @@ namespace ApiTest.Controllers
     {
         private FeedMeEntities db = new FeedMeEntities();
 
-        // GET: api/FeedBacks
-        public IQueryable<FeedBack> GetFeedBacks()
+        // GET: api/FeedBacks 
+        public IQueryable<FeedBack> GetFeedBacks()  
         {
             return db.FeedBacks;
         }
