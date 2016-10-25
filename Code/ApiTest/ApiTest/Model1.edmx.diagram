@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="57ba0ddc3e0c4712bf74e727d273157e" Name="Diagram1">
+        <EntityTypeShape EntityType="FeedMeModel.Coupon" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FeedMeModel.FeedBack" Width="1.5" PointX="8.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FeedMeModel.PeriodType" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FeedMeModel.Rol" Width="1.5" PointX="1.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FeedMeModel.Store" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FeedMeModel.User" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="FeedMeModel.FK__Coupon__PeriodId__1920BF5C" ManuallyRouted="false" />
+        <AssociationConnector Association="FeedMeModel.FK__Coupon__StoreId__182C9B23" ManuallyRouted="false" />
+        <AssociationConnector Association="FeedMeModel.FK__FeedBack__StoreI__1367E606" ManuallyRouted="false" />
+        <AssociationConnector Association="FeedMeModel.FK__Store__PeriodId__0EA330E9" ManuallyRouted="false" />
+        <AssociationConnector Association="FeedMeModel.FK__User__RoleId__08EA5793" ManuallyRouted="false" />
+        <AssociationConnector Association="FeedMeModel.FK__Store__UserId__0DAF0CB0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

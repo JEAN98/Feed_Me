@@ -1,0 +1,448 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FeedMeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Coupon">
+          <Key>
+            <PropertyRef Name="CouponId" />
+          </Key>
+          <Property Name="CouponId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Discount" Type="int" />
+          <Property Name="DiscountDescription" Type="varchar" MaxLength="50" />
+          <Property Name="ActivationStatus" Type="int" />
+          <Property Name="Email" Type="char" MaxLength="20" />
+          <Property Name="StoreId" Type="int" />
+          <Property Name="PeriodId" Type="int" />
+        </EntityType>
+        <EntityType Name="FeedBack">
+          <Key>
+            <PropertyRef Name="FeedBackId" />
+          </Key>
+          <Property Name="FeedBackId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoreId" Type="int" />
+          <Property Name="Face" Type="int" />
+          <Property Name="Opinion" Type="varchar" MaxLength="200" />
+          <Property Name="CreationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PeriodType">
+          <Key>
+            <PropertyRef Name="PeriodId" />
+          </Key>
+          <Property Name="PeriodId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PeriodName" Type="varchar" MaxLength="20" />
+          <Property Name="Number" Type="int" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="20" />
+          <Property Name="Number" Type="int" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreId" />
+          </Key>
+          <Property Name="StoreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UrlName" Type="varchar" MaxLength="30" />
+          <Property Name="CodName" Type="varchar" MaxLength="20" />
+          <Property Name="Discount" Type="int" />
+          <Property Name="Percentage" Type="float" />
+          <Property Name="ProductDescription" Type="varchar" MaxLength="100" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="PeriodId" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="20" />
+          <Property Name="Passwordkey" Type="varchar" MaxLength="40" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <Association Name="FK__Coupon__PeriodId__1920BF5C">
+          <End Role="PeriodType" Type="Self.PeriodType" Multiplicity="0..1" />
+          <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PeriodType">
+              <PropertyRef Name="PeriodId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="PeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Coupon__StoreId__182C9B23">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FeedBack__StoreI__1367E606">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="FeedBack" Type="Self.FeedBack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="FeedBack">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Store__PeriodId__0EA330E9">
+          <End Role="PeriodType" Type="Self.PeriodType" Multiplicity="0..1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PeriodType">
+              <PropertyRef Name="PeriodId" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="PeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Store__UserId__0DAF0CB0">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__RoleId__08EA5793">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FeedMeModelStoreContainer">
+          <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FeedBack" EntityType="Self.FeedBack" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PeriodType" EntityType="Self.PeriodType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Coupon__PeriodId__1920BF5C" Association="Self.FK__Coupon__PeriodId__1920BF5C">
+            <End Role="PeriodType" EntitySet="PeriodType" />
+            <End Role="Coupon" EntitySet="Coupon" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Coupon__StoreId__182C9B23" Association="Self.FK__Coupon__StoreId__182C9B23">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="Coupon" EntitySet="Coupon" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FeedBack__StoreI__1367E606" Association="Self.FK__FeedBack__StoreI__1367E606">
+            <End Role="Store" EntitySet="Store" />
+            <End Role="FeedBack" EntitySet="FeedBack" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Store__PeriodId__0EA330E9" Association="Self.FK__Store__PeriodId__0EA330E9">
+            <End Role="PeriodType" EntitySet="PeriodType" />
+            <End Role="Store" EntitySet="Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Store__UserId__0DAF0CB0" Association="Self.FK__Store__UserId__0DAF0CB0">
+            <End Role="User" EntitySet="User" />
+            <End Role="Store" EntitySet="Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__RoleId__08EA5793" Association="Self.FK__User__RoleId__08EA5793">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FeedMeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Coupon">
+          <Key>
+            <PropertyRef Name="CouponId" />
+          </Key>
+          <Property Name="CouponId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Discount" Type="Int32" />
+          <Property Name="DiscountDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ActivationStatus" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="StoreId" Type="Int32" />
+          <Property Name="PeriodId" Type="Int32" />
+          <NavigationProperty Name="PeriodType" Relationship="Self.FK__Coupon__PeriodId__1920BF5C" FromRole="Coupon" ToRole="PeriodType" />
+          <NavigationProperty Name="Store" Relationship="Self.FK__Coupon__StoreId__182C9B23" FromRole="Coupon" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="FeedBack">
+          <Key>
+            <PropertyRef Name="FeedBackId" />
+          </Key>
+          <Property Name="FeedBackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreId" Type="Int32" />
+          <Property Name="Face" Type="Int32" />
+          <Property Name="Opinion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Store" Relationship="Self.FK__FeedBack__StoreI__1367E606" FromRole="FeedBack" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="PeriodType">
+          <Key>
+            <PropertyRef Name="PeriodId" />
+          </Key>
+          <Property Name="PeriodId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PeriodName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Number" Type="Int32" />
+          <NavigationProperty Name="Coupons" Relationship="Self.FK__Coupon__PeriodId__1920BF5C" FromRole="PeriodType" ToRole="Coupon" />
+          <NavigationProperty Name="Stores" Relationship="Self.FK__Store__PeriodId__0EA330E9" FromRole="PeriodType" ToRole="Store" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Number" Type="Int32" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__User__RoleId__08EA5793" FromRole="Rol" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Store">
+          <Key>
+            <PropertyRef Name="StoreId" />
+          </Key>
+          <Property Name="StoreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UrlName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CodName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Discount" Type="Int32" />
+          <Property Name="Percentage" Type="Double" />
+          <Property Name="ProductDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="PeriodId" Type="Int32" />
+          <NavigationProperty Name="Coupons" Relationship="Self.FK__Coupon__StoreId__182C9B23" FromRole="Store" ToRole="Coupon" />
+          <NavigationProperty Name="FeedBacks" Relationship="Self.FK__FeedBack__StoreI__1367E606" FromRole="Store" ToRole="FeedBack" />
+          <NavigationProperty Name="PeriodType" Relationship="Self.FK__Store__PeriodId__0EA330E9" FromRole="Store" ToRole="PeriodType" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Store__UserId__0DAF0CB0" FromRole="Store" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Passwordkey" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK__User__RoleId__08EA5793" FromRole="User" ToRole="Rol" />
+          <NavigationProperty Name="Stores" Relationship="Self.FK__Store__UserId__0DAF0CB0" FromRole="User" ToRole="Store" />
+        </EntityType>
+        <Association Name="FK__Coupon__PeriodId__1920BF5C">
+          <End Role="PeriodType" Type="Self.PeriodType" Multiplicity="0..1" />
+          <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PeriodType">
+              <PropertyRef Name="PeriodId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="PeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Coupon__StoreId__182C9B23">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FeedBack__StoreI__1367E606">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="FeedBack" Type="Self.FeedBack" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="FeedBack">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Store__PeriodId__0EA330E9">
+          <End Role="PeriodType" Type="Self.PeriodType" Multiplicity="0..1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PeriodType">
+              <PropertyRef Name="PeriodId" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="PeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__RoleId__08EA5793">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Store__UserId__0DAF0CB0">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Store" Type="Self.Store" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Store">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FeedMeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Coupons" EntityType="Self.Coupon" />
+          <EntitySet Name="FeedBacks" EntityType="Self.FeedBack" />
+          <EntitySet Name="PeriodTypes" EntityType="Self.PeriodType" />
+          <EntitySet Name="Rols" EntityType="Self.Rol" />
+          <EntitySet Name="Stores" EntityType="Self.Store" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Coupon__PeriodId__1920BF5C" Association="Self.FK__Coupon__PeriodId__1920BF5C">
+            <End Role="PeriodType" EntitySet="PeriodTypes" />
+            <End Role="Coupon" EntitySet="Coupons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Coupon__StoreId__182C9B23" Association="Self.FK__Coupon__StoreId__182C9B23">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="Coupon" EntitySet="Coupons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FeedBack__StoreI__1367E606" Association="Self.FK__FeedBack__StoreI__1367E606">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="FeedBack" EntitySet="FeedBacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Store__PeriodId__0EA330E9" Association="Self.FK__Store__PeriodId__0EA330E9">
+            <End Role="PeriodType" EntitySet="PeriodTypes" />
+            <End Role="Store" EntitySet="Stores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__RoleId__08EA5793" Association="Self.FK__User__RoleId__08EA5793">
+            <End Role="Rol" EntitySet="Rols" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Store__UserId__0DAF0CB0" Association="Self.FK__Store__UserId__0DAF0CB0">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Store" EntitySet="Stores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FeedMeModelStoreContainer" CdmEntityContainer="FeedMeEntities">
+          <EntitySetMapping Name="Coupons">
+            <EntityTypeMapping TypeName="FeedMeModel.Coupon">
+              <MappingFragment StoreEntitySet="Coupon">
+                <ScalarProperty Name="CouponId" ColumnName="CouponId" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="DiscountDescription" ColumnName="DiscountDescription" />
+                <ScalarProperty Name="ActivationStatus" ColumnName="ActivationStatus" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeedBacks">
+            <EntityTypeMapping TypeName="FeedMeModel.FeedBack">
+              <MappingFragment StoreEntitySet="FeedBack">
+                <ScalarProperty Name="FeedBackId" ColumnName="FeedBackId" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Face" ColumnName="Face" />
+                <ScalarProperty Name="Opinion" ColumnName="Opinion" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PeriodTypes">
+            <EntityTypeMapping TypeName="FeedMeModel.PeriodType">
+              <MappingFragment StoreEntitySet="PeriodType">
+                <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+                <ScalarProperty Name="PeriodName" ColumnName="PeriodName" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rols">
+            <EntityTypeMapping TypeName="FeedMeModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stores">
+            <EntityTypeMapping TypeName="FeedMeModel.Store">
+              <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="UrlName" ColumnName="UrlName" />
+                <ScalarProperty Name="CodName" ColumnName="CodName" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="ProductDescription" ColumnName="ProductDescription" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FeedMeModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Passwordkey" ColumnName="Passwordkey" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
