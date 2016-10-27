@@ -176,7 +176,7 @@ namespace ApiTest.Controllers
             return Ok(user);
         }
 
-        public void ExchangeCoupon(string email )
+        public void ExchangeCoupon(string email,int storeI )
         {
             if (EmailReview(email) == 0)
             {

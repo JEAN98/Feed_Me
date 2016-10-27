@@ -116,7 +116,7 @@ namespace ApiTest.Controllers
         }
 
 
-        public IEnumerable<FeedBack> GraphBy0(string startDate, string endDate)
+        public IEnumerable<FeedBack> GraphBy0(string startDate, string endDate,int storeId)
         {
             List<FeedBack> result;
 
@@ -129,7 +129,7 @@ namespace ApiTest.Controllers
                 var end = new DateTime(splitValues1.ElementAt(0), splitValues1.ElementAt(01), splitValues1.ElementAt(02));
 
                 result = db.FeedBacks
-                    .Where(x => x.CreationDate >= start &&
+                    .Where(x =>x.StoreId==storeId && x.CreationDate >= start &&
                     x.CreationDate <= end && x.Face == 0)
                     .ToList();
             }
@@ -141,7 +141,7 @@ namespace ApiTest.Controllers
             return result;        
         }
 
-        public IEnumerable<FeedBack> GraphBy1(string startDate, string endDate)
+        public IEnumerable<FeedBack> GraphBy1(string startDate, string endDate,int storeId)
         {
             var result = new List<FeedBack>();
 
@@ -156,7 +156,7 @@ namespace ApiTest.Controllers
 
                 
                   result = db.FeedBacks
-                    .Where(x => x.CreationDate >= start &&
+                    .Where(x =>x.StoreId==storeId && x.CreationDate >= start &&
                                 x.CreationDate <= end && x.Face == 1)
                     .ToList();
 
@@ -168,13 +168,13 @@ namespace ApiTest.Controllers
            return result;
         }
 
-        public List<string> GetOpinions(string start,string end)
+        public List<string> GetOpinions(string start,string end,int storeId)
         {
             List<string> listOpinons = null;
             try
             {
-                IEnumerable<FeedBack> List1 = GraphBy1(start, end);
-                IEnumerable<FeedBack> List2 = GraphBy1(start, end);
+                IEnumerable<FeedBack> List1 = GraphBy1(start, end,storeId);
+                IEnumerable<FeedBack> List2 = GraphBy1(start, end,storeId);
                 if (List1 == null || List2 == null)
                 {
                     throw new Exception("You must to write the information about the datetime");
@@ -202,12 +202,12 @@ namespace ApiTest.Controllers
             return listOpinons;
         }
 
-        public void GetGraph(string start, string end)
+        public void GetGraph(string start, string end,int storeId)
         {
             try
             {
-                IEnumerable<FeedBack> List1 = GraphBy1(start, end);
-                IEnumerable<FeedBack> List2 = GraphBy1(start, end);
+                IEnumerable<FeedBack> List1 = GraphBy1(start, end,storeId);
+                IEnumerable<FeedBack> List2 = GraphBy1(start, end,storeId);
                 if (List1==null||List2==null)
                 {
                     throw new Exception("You must to write the information about datetime");
@@ -220,23 +220,6 @@ namespace ApiTest.Controllers
                 throw new Exception(ex.Message);
             }
         }
-        public void GetGraph2(string start, string end)
-        {
-            try
-            {
-                IEnumerable<FeedBack> List1 = GraphBy1(start, end);
-                IEnumerable<FeedBack> List2 = GraphBy1(start, end);
-                if (List1 == null || List2 == null)
-                {
-                    throw new Exception("You must to write the information");
-                }
-                var Happy = List1.Count();
-                var Sad = List2.Count();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+       
     }
 }
