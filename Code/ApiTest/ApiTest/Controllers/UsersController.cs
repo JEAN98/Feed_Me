@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -58,14 +59,13 @@ namespace ApiTest.Controllers
         //PasswordReview
         [ResponseType(typeof(string))]
         public bool PasswordReview(User user,string password)
-        {                     
-             bool validate = false;
+        {
+            bool validate;
 
             if (user.Passwordkey == PasswordEncrypt(password))
-                validate = true;                         
-            
+                return validate = true;                         
 
-            return validate;
+            return false;
         }
 
 
@@ -146,12 +146,13 @@ namespace ApiTest.Controllers
         [ResponseType(typeof(User))]
         public IHttpActionResult PostUser(User user)
         {
-            
-            if (!ModelState.IsValid)
+            if (EmailReview(user.Email) != 0)
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
             }
-            
 
             db.Users.Add(user);
             db.SaveChanges();
@@ -175,20 +176,9 @@ namespace ApiTest.Controllers
             return Ok(user);
         }
 
-        // DELETE: api/Users/5
-        [ResponseType(typeof(User))]
-        public IHttpActionResult DeleteUser2(int id)
+        public void CouponReview(int id,string roleName )
         {
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            db.Users.Remove(user);
-            db.SaveChanges();
-
-            return Ok(user);
+            
         }
 
         protected override void Dispose(bool disposing)
@@ -203,6 +193,29 @@ namespace ApiTest.Controllers
         private bool UserExists(int id)
         {
             return db.Users.Count(e => e.UserId == id) > 0;
+        }
+
+        private int EmailReview(string email)
+        {
+           List<User> userList= new List<User>();
+
+            userList = GetUsers().ToList();
+            try
+            {
+                foreach (var user in userList)
+                {
+                    if (user.Email == email)
+                    {
+                        return user.UserId;
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                // ignored
+                throw new InvalidOperationException(exception.Message);
+            }
+            return 0;
         }
     }
 }
