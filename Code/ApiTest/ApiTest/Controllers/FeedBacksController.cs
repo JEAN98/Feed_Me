@@ -168,6 +168,42 @@ namespace ApiTest.Controllers
            return result;
         }
 
+        public List<string> GetOpinions(string start,string end)
+        {
+            List<string> listOpinons = null;
+            try
+            {
+                IEnumerable<FeedBack> List1 = GraphBy1(start, end);
+                IEnumerable<FeedBack> List2 = GraphBy1(start, end);
+                if (List1 == null || List2 == null)
+                {
+                    throw new Exception("You must to write the information about the datetime");
+                }
+
+                foreach (var feedback in List1)
+                {
+                    if (feedback.Opinion !=null)
+                    {
+                        listOpinons.Add(feedback.Opinion);
+                    }
+                }
+                  foreach (var feedback in List2)
+                {
+                    if (feedback.Opinion != null)
+                    {
+                        listOpinons?.Add(feedback.Opinion);
+                    }
+                }
+                if (listOpinons == null)
+                    return null;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+            return listOpinons;
+        }
+
         public void GetGraph(string start, string end)
         {
             try
@@ -176,7 +212,7 @@ namespace ApiTest.Controllers
                 IEnumerable<FeedBack> List2 = GraphBy1(start, end);
                 if (List1==null||List2==null)
                 {
-                    throw new Exception("You must to write the information");
+                    throw new Exception("You must to write the information about datetime");
                 }
                 var Happy = List1.Count();
                 var Sad = List2.Count();               
