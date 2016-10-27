@@ -183,16 +183,12 @@ namespace ApiTest.Controllers
                 foreach (var feedback in List1)
                 {
                     if (feedback.Opinion !=null)
-                    {
-                        listOpinons.Add(feedback.Opinion);
-                    }
+                     listOpinons.Add(feedback.Opinion);
                 }
                   foreach (var feedback in List2)
                 {
                     if (feedback.Opinion != null)
-                    {
-                        listOpinons?.Add(feedback.Opinion);
-                    }
+                      listOpinons?.Add(feedback.Opinion);
                 }
                 if (listOpinons == null)
                     return null;
