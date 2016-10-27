@@ -176,9 +176,30 @@ namespace ApiTest.Controllers
             return Ok(user);
         }
 
-        public void CouponReview(int id,string roleName )
+        public void ExchangeCoupon(string email )
         {
-            
+            if (EmailReview(email) == 0)
+            {
+                User user = new User();
+
+                user.Email = email;
+                user.Passwordkey = "0000";
+                user.RoleId = 1;
+                PostUser(user);
+
+                Coupon coupon= new Coupon();
+
+                Store store = db.Stores.Find(1);
+
+                coupon.Email = user.Email;
+                coupon.StoreId = store.StoreId;
+                coupon.Discount = store.Discount;
+                coupon.ActivationStatus = 1;
+                coupon.DiscountDescription = store.ProductDescription;
+                coupon.PeriodId = store.PeriodId;
+                
+
+            }
         }
 
         protected override void Dispose(bool disposing)
