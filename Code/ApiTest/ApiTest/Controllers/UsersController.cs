@@ -198,6 +198,7 @@ namespace ApiTest.Controllers
                 coupon.DiscountDescription = store.ProductDescription;
                 coupon.PeriodId = store.PeriodId;
 
+                //Insertar coupon con esta información
                 //llamar al couponController es una mala práctica
                 
 
