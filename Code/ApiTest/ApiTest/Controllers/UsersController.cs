@@ -201,7 +201,7 @@ namespace ApiTest.Controllers
 
             userList = GetUsers().ToList();
             try
-            {
+            { 
                 foreach (var user in userList)
                 {
                     if (user.Email == email)
