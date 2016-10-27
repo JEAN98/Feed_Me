@@ -35,6 +35,11 @@ namespace ApiTest.Controllers
             return Ok(coupon);
         }
 
+        public void CouponReview()
+        {
+            
+        }
+
         // PUT: api/Coupons/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutCoupon(int id, Coupon coupon)

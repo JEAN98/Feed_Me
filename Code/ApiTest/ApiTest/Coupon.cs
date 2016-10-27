@@ -21,6 +21,7 @@ namespace ApiTest
         public string Email { get; set; }
         public Nullable<int> StoreId { get; set; }
         public Nullable<int> PeriodId { get; set; }
+        public Nullable<System.DateTime> CreateDateTime { get; set; }
     
         public virtual PeriodType PeriodType { get; set; }
         public virtual Store Store { get; set; }

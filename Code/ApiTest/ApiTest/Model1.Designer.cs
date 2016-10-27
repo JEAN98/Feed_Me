@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\JeanCarlo\Documents\MEGA\Cursos\Visual Studio\ApiTest\ApiTest\Model1.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\JeanCarlo\Documents\MEGA\Colegio Agropecuario\Especialiad de Info\Práctica\Feed_Me\Cpd\Feed_Me\Code\ApiTest\ApiTest\Model1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
