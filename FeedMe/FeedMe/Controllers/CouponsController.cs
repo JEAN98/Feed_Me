@@ -15,13 +15,13 @@ namespace FeedMe.Controllers
     public class CouponsController : ApiController
     {
         private FeedMeEntities db = new FeedMeEntities();
-       
+
         // GET: api/Coupons
         public IQueryable<Coupon> GetCoupons()
         {
             return db.Coupons;
         }
-        
+
         // GET: api/Coupons/5
         [ResponseType(typeof(Coupon))]
         public IHttpActionResult GetCoupon(int id)
@@ -82,7 +82,7 @@ namespace FeedMe.Controllers
             db.Coupons.Add(coupon);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = coupon.CouponId }, coupon);
+            return CreatedAtRoute("DefaultApi", new {id = coupon.CouponId}, coupon);
         }
 
         // DELETE: api/Coupons/5
@@ -100,6 +100,7 @@ namespace FeedMe.Controllers
 
             return Ok(coupon);
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -114,56 +115,72 @@ namespace FeedMe.Controllers
             return db.Coupons.Count(e => e.CouponId == id) > 0;
         }
 
+        //DesactivarCouponv fix this
+        public bool DeactivateCoupon(int cuoponId)
+        {
+            Coupon cuopon = db.Coupons.Find(cuoponId);
+
+            if (cuopon == null)
+                return false;
+
+            DateTime ?valiDateTime = cuopon.CreateDateTime;
+                
+            int ?caseSwitch = cuopon.PeriodId;
+
+            
+            //1= horas , 2=días, 3=Semanas,4=Meses
+            switch (caseSwitch)
+            {
+                case 1:
+                   
+                    break;
+                case 2:
+                   
+                    break;
+                default:
+                   
+                    break;
+                case 3:
+                   
+                    break;
+                case 4:
+                   
+                    break;
+            }
+
+            return true;
+        }
+
         public List<Coupon> GetCouponsByUserStatusActive(int userId)
         {
             return db.Coupons
-                .Where(x => x.UserId == userId && x.ActivationStatus == 1).ToList();//Devuelve una lista de los cupones que tiene activo
+                    .Where(x => x.UserId == userId && x.ActivationStatus == 1).ToList();
+                //Devuelve una lista de los cupones que tiene activo
         }
-        
+
         public bool ExchangeCoupon(string email, int storeId)
         {
             User user = new User();
-            UsersController usercinController= new UsersController();
+            UsersController usercinController = new UsersController();
             Coupon coupon = new Coupon();
             Store store = db.Stores.Find(storeId);
 
-            if (usercinController.EmailReview(email) == 0)
+            try
             {
-               
-                if (store == null)
+                if (usercinController.EmailReview(email) == 0)
                 {
-                    throw new InvalidOperationException("You must to insert a Store information does not exist");
-                }
-                user.Email = email;
-                user.Passwordkey = "0000";
-                user.RoleId = 1;
-                user.StoreId = storeId;
 
-                db.Users.Add(user);//Lo inserta en la base de datos
+                    if (store == null)
+                    {
+                        throw new InvalidOperationException("You must to insert a Store information does not exist");
+                    }
+                    user.Email = email;
+                    user.Passwordkey = "0000";
+                    user.RoleId = 1;
+                    user.StoreId = storeId;
 
-                coupon.Email = user.Email;
-                coupon.UserId = user.UserId;
-                coupon.StoreId = store.StoreId;
-                coupon.Discount = store.Discount;
-                coupon.ActivationStatus = 1;
-                coupon.DiscountDescription = store.ProductDescription;
-                coupon.PeriodId = store.PeriodId;
-                coupon.CreateDateTime = DateTime.Today;
+                    db.Users.Add(user); //Lo inserta en la base de datos
 
-                PostCoupon(coupon);  //Asigna un copon para el usuario
-                return true;
-            }
-            else
-            {
-                IQueryable<User> users = db.Users;//Obtiene una lista de todos los usuarios
-                foreach (var getUser in users)
-                {
-                    if (getUser.Email == email)
-                        user = getUser;
-                }
-                if (GetCouponsByUserStatusActive(user.UserId) != null)
-                {
-                    //Si no tiene ningún cupón activo
                     coupon.Email = user.Email;
                     coupon.UserId = user.UserId;
                     coupon.StoreId = store.StoreId;
@@ -173,13 +190,41 @@ namespace FeedMe.Controllers
                     coupon.PeriodId = store.PeriodId;
                     coupon.CreateDateTime = DateTime.Today;
 
-                    PostCoupon(coupon);  //Asigna el copon para el usuario
+                    PostCoupon(coupon); //Asigna un copon para el usuario
                     return true;
                 }
-                return false;
+                else
+                {
+                    IQueryable<User> users = db.Users; //Obtiene una lista de todos los usuarios
+                    foreach (var getUser in users)
+                    {
+                        if (getUser.Email == email)
+                            user = getUser;
+                    }
+                    if (GetCouponsByUserStatusActive(user.UserId) != null)
+                    {
+                        //Si no tiene ningún cupón activo
+                        coupon.Email = user.Email;
+                        coupon.UserId = user.UserId;
+                        coupon.StoreId = store.StoreId;
+                        coupon.Discount = store.Discount;
+                        coupon.ActivationStatus = 1;
+                        coupon.DiscountDescription = store.ProductDescription;
+                        coupon.PeriodId = store.PeriodId;
+                        coupon.CreateDateTime = DateTime.Today;
 
+                        PostCoupon(coupon); //Asigna el copon para el usuario
+                        return true;
+                    }
+                    return false;
+                }
             }
-        }
+            catch (Exception exception)
+            {
+                   throw;
+            }
+            return false;
+            }
 
         //Obtiene todos los cupones segun el storeId
         public List<Coupon> GetAllCuponByStore(int storeId)
