@@ -100,7 +100,6 @@ namespace FeedMe.Controllers
 
             return Ok(coupon);
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -121,7 +120,7 @@ namespace FeedMe.Controllers
                 .Where(x => x.UserId == userId && x.ActivationStatus == 1).ToList();//Devuelve una lista de los cupones que tiene activo
         }
         
-        public void ExchangeCoupon(string email, int storeId)
+        public bool ExchangeCoupon(string email, int storeId)
         {
             User user = new User();
             UsersController usercinController= new UsersController();
@@ -152,6 +151,7 @@ namespace FeedMe.Controllers
                 coupon.CreateDateTime = DateTime.Today;
 
                 PostCoupon(coupon);  //Asigna un copon para el usuario
+                return true;
             }
             else
             {
@@ -174,8 +174,10 @@ namespace FeedMe.Controllers
                     coupon.CreateDateTime = DateTime.Today;
 
                     PostCoupon(coupon);  //Asigna el copon para el usuario
+                    return true;
                 }
-                //retornar mensaje de que ya tiene copones y no puede canjear hasta que pase la fecha
+                return false;
+
             }
         }
 
@@ -184,7 +186,6 @@ namespace FeedMe.Controllers
         {
             return db.Coupons
                 .Where(x => x.StoreId == storeId).ToList();
-
         }
     }
 }
