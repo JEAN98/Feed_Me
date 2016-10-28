@@ -120,8 +120,7 @@ namespace FeedMe.Controllers
             return db.Coupons
                 .Where(x => x.UserId == userId && x.ActivationStatus == 1).ToList();//Devuelve una lista de los cupones que tiene activo
         }
-
-
+        
         public void ExchangeCoupon(string email, int storeId)
         {
             User user = new User();
@@ -134,7 +133,7 @@ namespace FeedMe.Controllers
                
                 if (store == null)
                 {
-                    throw new InvalidOperationException("You must to insert a Store information before make this!");
+                    throw new InvalidOperationException("You must to insert a Store information does not exist");
                 }
                 user.Email = email;
                 user.Passwordkey = "0000";
@@ -164,6 +163,7 @@ namespace FeedMe.Controllers
                 }
                 if (GetCouponsByUserStatusActive(user.UserId) != null)
                 {
+                    //Si no tiene ningún cupón activo
                     coupon.Email = user.Email;
                     coupon.UserId = user.UserId;
                     coupon.StoreId = store.StoreId;
@@ -172,12 +172,19 @@ namespace FeedMe.Controllers
                     coupon.DiscountDescription = store.ProductDescription;
                     coupon.PeriodId = store.PeriodId;
                     coupon.CreateDateTime = DateTime.Today;
-                }
-                //retornar mensaje de que ya tiene copones y no puede canjera hasta que pase la fecha
 
+                    PostCoupon(coupon);  //Asigna el copon para el usuario
+                }
+                //retornar mensaje de que ya tiene copones y no puede canjear hasta que pase la fecha
             }
         }
-       
 
+        //Obtiene todos los cupones segun el storeId
+        public List<Coupon> GetAllCuponByStore(int storeId)
+        {
+            return db.Coupons
+                .Where(x => x.StoreId == storeId).ToList();
+
+        }
     }
 }
