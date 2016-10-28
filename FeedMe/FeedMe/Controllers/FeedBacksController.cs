@@ -114,5 +114,108 @@ namespace FeedMe.Controllers
         {
             return db.FeedBacks.Count(e => e.FeedBackId == id) > 0;
         }
+
+        public IEnumerable<FeedBack> GraphBy0(string startDate, string endDate, int storeId)
+        {
+            List<FeedBack> result;
+
+            try
+            {
+                var splitValues0 = startDate.Split('-').Select(x => Int32.Parse(x));
+                var start = new DateTime(splitValues0.ElementAt(0), splitValues0.ElementAt(01), splitValues0.ElementAt(02));
+
+                var splitValues1 = endDate.Split('-').Select(x => Int32.Parse(x));
+                var end = new DateTime(splitValues1.ElementAt(0), splitValues1.ElementAt(01), splitValues1.ElementAt(02));
+
+                result = db.FeedBacks
+                    .Where(x => x.StoreId == storeId && x.CreationDate >= start &&
+                    x.CreationDate <= end && x.Face == 0)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(ex.Message);
+            }
+
+            return result;
+        }
+        public IEnumerable<FeedBack> GraphBy1(string startDate, string endDate, int storeId)
+        {
+            var result = new List<FeedBack>();
+
+            try
+            {
+                var splitValues0 = startDate.Split('-').Select(x => Int32.Parse(x));
+                var start = new DateTime(splitValues0.ElementAt(0), splitValues0.ElementAt(01),
+                    splitValues0.ElementAt(02));
+
+                var splitValues1 = endDate.Split('-').Select(x => Int32.Parse(x));
+                var end = new DateTime(splitValues1.ElementAt(0), splitValues1.ElementAt(01), splitValues1.ElementAt(02));
+
+
+                result = db.FeedBacks
+                  .Where(x => x.StoreId == storeId && x.CreationDate >= start &&
+                              x.CreationDate <= end && x.Face == 1)
+                  .ToList();
+
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidOperationException(exception.Message);
+            }
+            return result;
+        }
+        public List<string> GetOpinions(string start, string end, int storeId)
+        {
+            List<string> listOpinons = null;
+            try
+            {
+                IEnumerable<FeedBack> List1 = GraphBy1(start, end, storeId);
+                IEnumerable<FeedBack> List2 = GraphBy1(start, end, storeId);
+                if (List1 == null || List2 == null)
+                {
+                    throw new Exception("You must to write the information about the datetime");
+                }
+
+                foreach (var feedback in List1)
+                {
+                    if (feedback.Opinion != null)
+                        listOpinons.Add(feedback.Opinion);
+                }
+
+                foreach (var feedback in List2)
+                {
+                    if (feedback.Opinion != null)
+                        listOpinons?.Add(feedback.Opinion);
+                }
+
+                if (listOpinons == null)
+                    return null;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+            return listOpinons;
+        }
+
+        public void GetGraph(string start, string end, int storeId)
+        {
+            try
+            {
+                IEnumerable<FeedBack> List1 = GraphBy1(start, end, storeId);
+                IEnumerable<FeedBack> List2 = GraphBy1(start, end, storeId);
+                if (List1 == null || List2 == null)
+                {
+                    throw new Exception("You must to write the information about datetime");
+                }
+                var Happy = List1.Count();
+                var Sad = List2.Count();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

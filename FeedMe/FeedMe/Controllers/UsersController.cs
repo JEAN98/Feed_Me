@@ -6,6 +6,8 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
 using FeedMe;
@@ -113,6 +115,76 @@ namespace FeedMe.Controllers
         private bool UserExists(int id)
         {
             return db.Users.Count(e => e.UserId == id) > 0;
+        }
+        public int EmailReview(string email)
+        {
+            List<User> userList = new List<User>();
+
+            userList = GetUsers().ToList();
+            try
+            {
+                foreach (var user in userList)
+                {
+                    if (user.Email == email)
+                    {
+                        return user.UserId;
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                // ignored
+                throw new InvalidOperationException(exception.Message);
+            }
+            return 0;
+        }
+        [ResponseType(typeof(string))]
+        public IHttpActionResult InsertingPassword(string password)
+        {
+            if (string.IsNullOrEmpty(password))
+            {
+                return Content(HttpStatusCode.NotFound, "You must to write a password");
+            }
+            if (password.Length > 10)
+            {
+                return Content(HttpStatusCode.NotFound, "The password must be less than ten characters");
+            }
+            else
+            {
+                PasswordEncrypt(password);
+                //Then insert into data base , pero el post user solo resive un dato de que es "User"
+            }
+            return Content(HttpStatusCode.Accepted, "Ready!");
+        }
+
+       
+        //Incriptar contraseña
+        [ResponseType(typeof(string))]
+        public string PasswordEncrypt(string password)
+        {
+            MD5CryptoServiceProvider encrypted = new MD5CryptoServiceProvider();
+            byte[] plainbytes = Encoding.ASCII.GetBytes(password);
+
+            encrypted.ComputeHash(plainbytes);
+
+            byte[] hashBytes = encrypted.Hash;
+
+            string encryptedPassword = BitConverter.ToString(hashBytes);
+
+            return encryptedPassword;
+        }
+
+        
+        //PasswordReview
+        [ResponseType(typeof(string))]
+        public bool PasswordReview(User user, string password)
+        {
+            bool validate;
+
+            if (user.Passwordkey == PasswordEncrypt(password))
+                return validate = true;
+
+            return false;
         }
     }
 }

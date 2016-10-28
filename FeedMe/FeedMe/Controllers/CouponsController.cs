@@ -21,7 +21,7 @@ namespace FeedMe.Controllers
         {
             return db.Coupons;
         }
-
+        
         // GET: api/Coupons/5
         [ResponseType(typeof(Coupon))]
         public IHttpActionResult GetCoupon(int id)
@@ -114,5 +114,41 @@ namespace FeedMe.Controllers
         {
             return db.Coupons.Count(e => e.CouponId == id) > 0;
         }
+
+
+        public void ExchangeCoupon(string email, int storeId)
+        {
+            UsersController usercinController= new UsersController();
+            if (usercinController.EmailReview(email) == 0)
+            {
+                User user = new User();
+
+                user.Email = email;
+                user.Passwordkey = "0000";
+                user.RoleId = 1;
+                usercinController.PostUser(user);
+
+                Coupon coupon = new Coupon();
+
+                Store store = db.Stores.Find(storeId);
+                if (store == null)
+                {
+                    throw new InvalidOperationException("You must to insert a Store information before make this!");
+                }
+                coupon.Email = user.Email;
+                coupon.StoreId = store.StoreId;
+                coupon.Discount = store.Discount;
+                coupon.ActivationStatus = 1;
+                coupon.DiscountDescription = store.ProductDescription;
+                coupon.PeriodId = store.PeriodId;
+
+                PostCoupon(coupon);
+
+
+            }
+        }
+
+
+
     }
 }
