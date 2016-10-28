@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedMe", "FeedMe\FeedMe.csproj", "{B409DF91-DEC8-4344-ADCB-02BA6A14AEA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedMe.Tests", "FeedMe.Tests\FeedMe.Tests.csproj", "{3D56E859-B3D3-45DA-B65A-CE1E741F7509}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B409DF91-DEC8-4344-ADCB-02BA6A14AEA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B409DF91-DEC8-4344-ADCB-02BA6A14AEA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B409DF91-DEC8-4344-ADCB-02BA6A14AEA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B409DF91-DEC8-4344-ADCB-02BA6A14AEA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D56E859-B3D3-45DA-B65A-CE1E741F7509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D56E859-B3D3-45DA-B65A-CE1E741F7509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D56E859-B3D3-45DA-B65A-CE1E741F7509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D56E859-B3D3-45DA-B65A-CE1E741F7509}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
