@@ -179,10 +179,8 @@ namespace FeedMe.Controllers
         [ResponseType(typeof(string))]
         public bool PasswordReview(User user, string password)
         {
-            bool validate;
-
             if (user.Passwordkey == PasswordEncrypt(password))
-                return validate = true;
+                return true;
 
             return false;
         }
