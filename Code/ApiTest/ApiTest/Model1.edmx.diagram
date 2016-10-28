@@ -10,13 +10,18 @@
         <EntityTypeShape EntityType="FeedMeModel.PeriodType" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="FeedMeModel.Rol" Width="1.5" PointX="1.5" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="FeedMeModel.Store" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FeedMeModel.User" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FeedMeModel.User" Width="1.5" PointX="3.75" PointY="0.5" IsExpanded="true" />
         <AssociationConnector Association="FeedMeModel.FK__Coupon__PeriodId__1920BF5C" ManuallyRouted="false" />
         <AssociationConnector Association="FeedMeModel.FK__Coupon__StoreId__182C9B23" ManuallyRouted="false" />
         <AssociationConnector Association="FeedMeModel.FK__FeedBack__StoreI__1367E606" ManuallyRouted="false" />
         <AssociationConnector Association="FeedMeModel.FK__Store__PeriodId__0EA330E9" ManuallyRouted="false" />
         <AssociationConnector Association="FeedMeModel.FK__User__RoleId__08EA5793" ManuallyRouted="false" />
         <AssociationConnector Association="FeedMeModel.FK__Store__UserId__0DAF0CB0" ManuallyRouted="false" />
+        <AssociationConnector Association="FeedMeModel.FK__Coupon__UserId__48CFD27E" />
+        <AssociationConnector Association="FeedMeModel.FK__User__StoreId__3F466844" />
+        <AssociationConnector Association="FeedMeModel.FK__Coupon__UserId__48CFD27E" />
+        <AssociationConnector Association="FeedMeModel.FK__User__StoreId__3F466844" />
+        <AssociationConnector Association="FeedMeModel.FK__User__StoreId__3F4668441" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

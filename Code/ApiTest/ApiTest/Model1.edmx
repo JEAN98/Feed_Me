@@ -13,6 +13,7 @@
           <Property Name="Discount" Type="int" />
           <Property Name="DiscountDescription" Type="varchar" MaxLength="50" />
           <Property Name="ActivationStatus" Type="int" />
+          <Property Name="UserId" Type="int" />
           <Property Name="Email" Type="char" MaxLength="20" />
           <Property Name="CreateDateTime" Type="datetime" />
           <Property Name="StoreId" Type="int" />
@@ -54,7 +55,6 @@
           <Property Name="Discount" Type="int" />
           <Property Name="Percentage" Type="float" />
           <Property Name="ProductDescription" Type="varchar" MaxLength="100" />
-          <Property Name="UserId" Type="int" />
           <Property Name="PeriodId" Type="int" />
         </EntityType>
         <EntityType Name="User">
@@ -65,8 +65,9 @@
           <Property Name="Email" Type="varchar" MaxLength="20" />
           <Property Name="Passwordkey" Type="varchar" MaxLength="40" />
           <Property Name="RoleId" Type="int" />
+          <Property Name="StoreId" Type="int" StoreGeneratedPattern="Identity" />
         </EntityType>
-        <Association Name="FK__Coupon__PeriodId__33D4B598">
+        <Association Name="FK__Coupon__PeriodId__4AB81AF0">
           <End Role="PeriodType" Type="Self.PeriodType" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -78,7 +79,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Coupon__StoreId__32E0915F">
+        <Association Name="FK__Coupon__StoreId__49C3F6B7">
           <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -90,7 +91,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FeedBack__StoreI__1367E606">
+        <Association Name="FK__Coupon__UserId__48CFD27E">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FeedBack__StoreI__440B1D61">
           <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
           <End Role="FeedBack" Type="Self.FeedBack" Multiplicity="*" />
           <ReferentialConstraint>
@@ -102,7 +115,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Store__PeriodId__0EA330E9">
+        <Association Name="FK__Store__PeriodId__38996AB5">
           <End Role="PeriodType" Type="Self.PeriodType" Multiplicity="0..1" />
           <End Role="Store" Type="Self.Store" Multiplicity="*" />
           <ReferentialConstraint>
@@ -114,19 +127,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Store__UserId__0DAF0CB0">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Store" Type="Self.Store" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Store">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__User__RoleId__08EA5793">
+        <Association Name="FK__User__RoleId__3E52440B">
           <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -138,6 +139,117 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__User__StoreId__3F466844">
+          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="DeleteCoupon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CouponId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteFeedBack" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FeedBackId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeletePeriodType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PeriodId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RoleId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteStore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StoreId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FeedBackTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="InsertCoupon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Discount" Type="int" Mode="In" />
+          <Parameter Name="DiscountDescription" Type="varchar" Mode="In" />
+          <Parameter Name="ActivationStatus" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="char" Mode="In" />
+          <Parameter Name="StoreId" Type="int" Mode="In" />
+          <Parameter Name="PeriodId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertFeedBack" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StoreId" Type="int" Mode="In" />
+          <Parameter Name="Face" Type="int" Mode="In" />
+          <Parameter Name="Opinion" Type="varchar" Mode="In" />
+          <Parameter Name="CreationDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="InsertPeriodType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PeriodName" Type="varchar" Mode="In" />
+          <Parameter Name="Number" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RoleName" Type="varchar" Mode="In" />
+          <Parameter Name="Number" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertStore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UrlName" Type="varchar" Mode="In" />
+          <Parameter Name="CodName" Type="varchar" Mode="In" />
+          <Parameter Name="Discount" Type="int" Mode="In" />
+          <Parameter Name="Percentage" Type="float" Mode="In" />
+          <Parameter Name="ProductDescription" Type="varchar" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="PeriodId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Passwordkey" Type="varchar" Mode="In" />
+          <Parameter Name="RoleId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ModifyCoupon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CouponId" Type="int" Mode="In" />
+          <Parameter Name="Discount" Type="int" Mode="In" />
+          <Parameter Name="DiscountDescription" Type="varchar" Mode="In" />
+          <Parameter Name="ActivationStatus" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="char" Mode="In" />
+          <Parameter Name="StoreId" Type="int" Mode="In" />
+          <Parameter Name="PeriodId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ModifyFeedBack" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FeedBackId" Type="int" Mode="In" />
+          <Parameter Name="StoreId" Type="int" Mode="In" />
+          <Parameter Name="Face" Type="int" Mode="In" />
+          <Parameter Name="Opinion" Type="varchar" Mode="In" />
+          <Parameter Name="CreationDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="ModifyPeriodType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PeriodId" Type="int" Mode="In" />
+          <Parameter Name="PeriodName" Type="varchar" Mode="In" />
+          <Parameter Name="Number" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ModifyRol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RoleId" Type="int" Mode="In" />
+          <Parameter Name="RoleName" Type="varchar" Mode="In" />
+          <Parameter Name="Number" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ModifyStore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StoreId" Type="int" Mode="In" />
+          <Parameter Name="UrlName" Type="varchar" Mode="In" />
+          <Parameter Name="CodName" Type="varchar" Mode="In" />
+          <Parameter Name="Discount" Type="int" Mode="In" />
+          <Parameter Name="Percentage" Type="float" Mode="In" />
+          <Parameter Name="ProductDescription" Type="varchar" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="PeriodId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ModifyUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserId" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Passwordkey" Type="varchar" Mode="In" />
+          <Parameter Name="RoleId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="StoreTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UserTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="FeedMeModelStoreContainer">
           <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FeedBack" EntityType="Self.FeedBack" Schema="dbo" store:Type="Tables" />
@@ -145,28 +257,32 @@
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Coupon__PeriodId__33D4B598" Association="Self.FK__Coupon__PeriodId__33D4B598">
+          <AssociationSet Name="FK__Coupon__PeriodId__4AB81AF0" Association="Self.FK__Coupon__PeriodId__4AB81AF0">
             <End Role="PeriodType" EntitySet="PeriodType" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
-          <AssociationSet Name="FK__Coupon__StoreId__32E0915F" Association="Self.FK__Coupon__StoreId__32E0915F">
+          <AssociationSet Name="FK__Coupon__StoreId__49C3F6B7" Association="Self.FK__Coupon__StoreId__49C3F6B7">
             <End Role="Store" EntitySet="Store" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
-          <AssociationSet Name="FK__FeedBack__StoreI__1367E606" Association="Self.FK__FeedBack__StoreI__1367E606">
+          <AssociationSet Name="FK__Coupon__UserId__48CFD27E" Association="Self.FK__Coupon__UserId__48CFD27E">
+            <End Role="User" EntitySet="User" />
+            <End Role="Coupon" EntitySet="Coupon" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FeedBack__StoreI__440B1D61" Association="Self.FK__FeedBack__StoreI__440B1D61">
             <End Role="Store" EntitySet="Store" />
             <End Role="FeedBack" EntitySet="FeedBack" />
           </AssociationSet>
-          <AssociationSet Name="FK__Store__PeriodId__0EA330E9" Association="Self.FK__Store__PeriodId__0EA330E9">
+          <AssociationSet Name="FK__Store__PeriodId__38996AB5" Association="Self.FK__Store__PeriodId__38996AB5">
             <End Role="PeriodType" EntitySet="PeriodType" />
             <End Role="Store" EntitySet="Store" />
           </AssociationSet>
-          <AssociationSet Name="FK__Store__UserId__0DAF0CB0" Association="Self.FK__Store__UserId__0DAF0CB0">
-            <End Role="User" EntitySet="User" />
-            <End Role="Store" EntitySet="Store" />
-          </AssociationSet>
-          <AssociationSet Name="FK__User__RoleId__08EA5793" Association="Self.FK__User__RoleId__08EA5793">
+          <AssociationSet Name="FK__User__RoleId__3E52440B" Association="Self.FK__User__RoleId__3E52440B">
             <End Role="Rol" EntitySet="Rol" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__StoreId__3F466844" Association="Self.FK__User__StoreId__3F466844">
+            <End Role="Store" EntitySet="Store" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
@@ -188,6 +304,8 @@
           <NavigationProperty Name="PeriodType" Relationship="Self.FK__Coupon__PeriodId__1920BF5C" FromRole="Coupon" ToRole="PeriodType" />
           <NavigationProperty Name="Store" Relationship="Self.FK__Coupon__StoreId__182C9B23" FromRole="Coupon" ToRole="Store" />
           <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="FeedMeModel.FK__Coupon__UserId__48CFD27E" FromRole="Coupon" ToRole="User" />
         </EntityType>
         <EntityType Name="FeedBack">
           <Key>
@@ -223,18 +341,20 @@
           <Key>
             <PropertyRef Name="StoreId" />
           </Key>
-          <Property Name="StoreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreId" Type="Int32" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UrlName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="CodName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Discount" Type="Int32" />
           <Property Name="Percentage" Type="Double" />
           <Property Name="ProductDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="UserId" Type="Int32" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="PeriodId" Type="Int32" />
           <NavigationProperty Name="Coupons" Relationship="Self.FK__Coupon__StoreId__182C9B23" FromRole="Store" ToRole="Coupon" />
           <NavigationProperty Name="FeedBacks" Relationship="Self.FK__FeedBack__StoreI__1367E606" FromRole="Store" ToRole="FeedBack" />
           <NavigationProperty Name="PeriodType" Relationship="Self.FK__Store__PeriodId__0EA330E9" FromRole="Store" ToRole="PeriodType" />
           <NavigationProperty Name="User" Relationship="Self.FK__Store__UserId__0DAF0CB0" FromRole="Store" ToRole="User" />
+          <NavigationProperty Name="Users" Relationship="FeedMeModel.FK__User__StoreId__3F4668441" FromRole="Store" ToRole="Store1" />
+          <NavigationProperty Name="Store1" Relationship="FeedMeModel.FK__User__StoreId__3F4668441" FromRole="Store1" ToRole="Store" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -245,7 +365,7 @@
           <Property Name="Passwordkey" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="RoleId" Type="Int32" />
           <NavigationProperty Name="Rol" Relationship="Self.FK__User__RoleId__08EA5793" FromRole="User" ToRole="Rol" />
-          <NavigationProperty Name="Stores" Relationship="Self.FK__Store__UserId__0DAF0CB0" FromRole="User" ToRole="Store" />
+          <NavigationProperty Name="Coupons" Relationship="FeedMeModel.FK__Coupon__UserId__48CFD27E" FromRole="User" ToRole="Coupon" />
         </EntityType>
         <Association Name="FK__Coupon__PeriodId__1920BF5C">
           <End Role="PeriodType" Type="Self.PeriodType" Multiplicity="0..1" />
@@ -350,7 +470,177 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Store" EntitySet="Stores" />
           </AssociationSet>
+          <AssociationSet Name="FK__Coupon__UserId__48CFD27E" Association="FeedMeModel.FK__Coupon__UserId__48CFD27E">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Coupon" EntitySet="Coupons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__StoreId__3F466844" Association="FeedMeModel.FK__User__StoreId__3F466844">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__StoreId__3F4668441" Association="FeedMeModel.FK__User__StoreId__3F4668441">
+            <End Role="Store" EntitySet="Stores" />
+            <End Role="Store1" EntitySet="Stores" />
+          </AssociationSet>
+          <FunctionImport Name="DeleteCoupon">
+            <Parameter Name="CouponId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteFeedBack">
+            <Parameter Name="FeedBackId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeletePeriodType">
+            <Parameter Name="PeriodId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteRol">
+            <Parameter Name="RoleId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteStore">
+            <Parameter Name="StoreId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteUser">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FeedBackTables" ReturnType="Collection(FeedMeModel.FeedBackTables_Result)" />
+          <FunctionImport Name="InsertCoupon">
+            <Parameter Name="Discount" Mode="In" Type="Int32" />
+            <Parameter Name="DiscountDescription" Mode="In" Type="String" />
+            <Parameter Name="ActivationStatus" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="StoreId" Mode="In" Type="Int32" />
+            <Parameter Name="PeriodId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertFeedBack">
+            <Parameter Name="StoreId" Mode="In" Type="Int32" />
+            <Parameter Name="Face" Mode="In" Type="Int32" />
+            <Parameter Name="Opinion" Mode="In" Type="String" />
+            <Parameter Name="CreationDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InsertPeriodType">
+            <Parameter Name="PeriodName" Mode="In" Type="String" />
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertRol">
+            <Parameter Name="RoleName" Mode="In" Type="String" />
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertStore">
+            <Parameter Name="UrlName" Mode="In" Type="String" />
+            <Parameter Name="CodName" Mode="In" Type="String" />
+            <Parameter Name="Discount" Mode="In" Type="Int32" />
+            <Parameter Name="Percentage" Mode="In" Type="Double" />
+            <Parameter Name="ProductDescription" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="PeriodId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUser">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Passwordkey" Mode="In" Type="String" />
+            <Parameter Name="RoleId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyCoupon">
+            <Parameter Name="CouponId" Mode="In" Type="Int32" />
+            <Parameter Name="Discount" Mode="In" Type="Int32" />
+            <Parameter Name="DiscountDescription" Mode="In" Type="String" />
+            <Parameter Name="ActivationStatus" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="StoreId" Mode="In" Type="Int32" />
+            <Parameter Name="PeriodId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyFeedBack">
+            <Parameter Name="FeedBackId" Mode="In" Type="Int32" />
+            <Parameter Name="StoreId" Mode="In" Type="Int32" />
+            <Parameter Name="Face" Mode="In" Type="Int32" />
+            <Parameter Name="Opinion" Mode="In" Type="String" />
+            <Parameter Name="CreationDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyPeriodType">
+            <Parameter Name="PeriodId" Mode="In" Type="Int32" />
+            <Parameter Name="PeriodName" Mode="In" Type="String" />
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyRol">
+            <Parameter Name="RoleId" Mode="In" Type="Int32" />
+            <Parameter Name="RoleName" Mode="In" Type="String" />
+            <Parameter Name="Number" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyStore">
+            <Parameter Name="StoreId" Mode="In" Type="Int32" />
+            <Parameter Name="UrlName" Mode="In" Type="String" />
+            <Parameter Name="CodName" Mode="In" Type="String" />
+            <Parameter Name="Discount" Mode="In" Type="Int32" />
+            <Parameter Name="Percentage" Mode="In" Type="Double" />
+            <Parameter Name="ProductDescription" Mode="In" Type="String" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="PeriodId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ModifyUser">
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Passwordkey" Mode="In" Type="String" />
+            <Parameter Name="RoleId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="StoreTables" ReturnType="Collection(FeedMeModel.StoreTables_Result)" />
+          <FunctionImport Name="UserTables" ReturnType="Collection(FeedMeModel.UserTables_Result)" />
         </EntityContainer>
+        <Association Name="FK__Coupon__UserId__48CFD27E">
+          <End Type="FeedMeModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="FeedMeModel.Coupon" Role="Coupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Coupon">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__StoreId__3F466844">
+          <End Type="FeedMeModel.Store" Role="Store" Multiplicity="0..1" />
+          <End Type="FeedMeModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__StoreId__3F4668441">
+          <End Type="FeedMeModel.Store" Role="Store" Multiplicity="0..1" />
+          <End Type="FeedMeModel.Store" Role="Store1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Store">
+              <PropertyRef Name="StoreId" />
+            </Principal>
+            <Dependent Role="Store1">
+              <PropertyRef Name="StoreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="FeedBackTables_Result">
+          <Property Type="Int32" Name="FeedBackId" Nullable="false" />
+          <Property Type="Int32" Name="StoreId" Nullable="true" />
+          <Property Type="Int32" Name="Face" Nullable="true" />
+          <Property Type="String" Name="Opinion" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="CreationDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="StoreTables_Result">
+          <Property Type="Int32" Name="StoreId" Nullable="false" />
+          <Property Type="String" Name="UrlName" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="CodName" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="Discount" Nullable="true" />
+          <Property Type="Double" Name="Percentage" Nullable="true" />
+          <Property Type="String" Name="ProductDescription" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="PeriodId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="UserTables_Result">
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Passwordkey" Nullable="true" MaxLength="40" />
+          <Property Type="Int32" Name="RoleId" Nullable="true" />
+          <Property Type="Int32" Name="StoreId" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -360,6 +650,7 @@
           <EntitySetMapping Name="Coupons">
             <EntityTypeMapping TypeName="FeedMeModel.Coupon">
               <MappingFragment StoreEntitySet="Coupon">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="CreateDateTime" ColumnName="CreateDateTime" />
                 <ScalarProperty Name="CouponId" ColumnName="CouponId" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
@@ -409,8 +700,11 @@
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="Percentage" ColumnName="Percentage" />
                 <ScalarProperty Name="ProductDescription" ColumnName="ProductDescription" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+              </MappingFragment>
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -424,6 +718,59 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DeleteCoupon" FunctionName="FeedMeModel.Store.DeleteCoupon" />
+          <FunctionImportMapping FunctionImportName="DeleteFeedBack" FunctionName="FeedMeModel.Store.DeleteFeedBack" />
+          <FunctionImportMapping FunctionImportName="DeletePeriodType" FunctionName="FeedMeModel.Store.DeletePeriodType" />
+          <FunctionImportMapping FunctionImportName="DeleteRol" FunctionName="FeedMeModel.Store.DeleteRol" />
+          <FunctionImportMapping FunctionImportName="DeleteStore" FunctionName="FeedMeModel.Store.DeleteStore" />
+          <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="FeedMeModel.Store.DeleteUser" />
+          <FunctionImportMapping FunctionImportName="FeedBackTables" FunctionName="FeedMeModel.Store.FeedBackTables">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FeedMeModel.FeedBackTables_Result">
+                <ScalarProperty Name="FeedBackId" ColumnName="FeedBackId" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="Face" ColumnName="Face" />
+                <ScalarProperty Name="Opinion" ColumnName="Opinion" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertCoupon" FunctionName="FeedMeModel.Store.InsertCoupon" />
+          <FunctionImportMapping FunctionImportName="InsertFeedBack" FunctionName="FeedMeModel.Store.InsertFeedBack" />
+          <FunctionImportMapping FunctionImportName="InsertPeriodType" FunctionName="FeedMeModel.Store.InsertPeriodType" />
+          <FunctionImportMapping FunctionImportName="InsertRol" FunctionName="FeedMeModel.Store.InsertRol" />
+          <FunctionImportMapping FunctionImportName="InsertStore" FunctionName="FeedMeModel.Store.InsertStore" />
+          <FunctionImportMapping FunctionImportName="InsertUser" FunctionName="FeedMeModel.Store.InsertUser" />
+          <FunctionImportMapping FunctionImportName="ModifyCoupon" FunctionName="FeedMeModel.Store.ModifyCoupon" />
+          <FunctionImportMapping FunctionImportName="ModifyFeedBack" FunctionName="FeedMeModel.Store.ModifyFeedBack" />
+          <FunctionImportMapping FunctionImportName="ModifyPeriodType" FunctionName="FeedMeModel.Store.ModifyPeriodType" />
+          <FunctionImportMapping FunctionImportName="ModifyRol" FunctionName="FeedMeModel.Store.ModifyRol" />
+          <FunctionImportMapping FunctionImportName="ModifyStore" FunctionName="FeedMeModel.Store.ModifyStore" />
+          <FunctionImportMapping FunctionImportName="ModifyUser" FunctionName="FeedMeModel.Store.ModifyUser" />
+          <FunctionImportMapping FunctionImportName="StoreTables" FunctionName="FeedMeModel.Store.StoreTables">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FeedMeModel.StoreTables_Result">
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+                <ScalarProperty Name="UrlName" ColumnName="UrlName" />
+                <ScalarProperty Name="CodName" ColumnName="CodName" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="ProductDescription" ColumnName="ProductDescription" />
+                <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UserTables" FunctionName="FeedMeModel.Store.UserTables">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FeedMeModel.UserTables_Result">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Passwordkey" ColumnName="Passwordkey" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
