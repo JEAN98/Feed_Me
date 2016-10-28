@@ -115,40 +115,69 @@ namespace FeedMe.Controllers
             return db.Coupons.Count(e => e.CouponId == id) > 0;
         }
 
+        public List<Coupon> GetCouponsByUserStatusActive(int userId)
+        {
+            return db.Coupons
+                .Where(x => x.UserId == userId && x.ActivationStatus == 1).ToList();//Devuelve una lista de los cupones que tiene activo
+        }
+
 
         public void ExchangeCoupon(string email, int storeId)
         {
+            User user = new User();
             UsersController usercinController= new UsersController();
+            Coupon coupon = new Coupon();
+            Store store = db.Stores.Find(storeId);
+
             if (usercinController.EmailReview(email) == 0)
             {
-                User user = new User();
-
-                user.Email = email;
-                user.Passwordkey = "0000";
-                user.RoleId = 1;
-                usercinController.PostUser(user);
-
-                Coupon coupon = new Coupon();
-
-                Store store = db.Stores.Find(storeId);
+               
                 if (store == null)
                 {
                     throw new InvalidOperationException("You must to insert a Store information before make this!");
                 }
+                user.Email = email;
+                user.Passwordkey = "0000";
+                user.RoleId = 1;
+                user.StoreId = storeId;
+
+                db.Users.Add(user);//Lo inserta en la base de datos
+
                 coupon.Email = user.Email;
+                coupon.UserId = user.UserId;
                 coupon.StoreId = store.StoreId;
                 coupon.Discount = store.Discount;
                 coupon.ActivationStatus = 1;
                 coupon.DiscountDescription = store.ProductDescription;
                 coupon.PeriodId = store.PeriodId;
+                coupon.CreateDateTime = DateTime.Today;
 
-                PostCoupon(coupon);
-
+                PostCoupon(coupon);  //Asigna un copon para el usuario
+            }
+            else
+            {
+                IQueryable<User> users = db.Users;//Obtiene una lista de todos los usuarios
+                foreach (var getUser in users)
+                {
+                    if (getUser.Email == email)
+                        user = getUser;
+                }
+                if (GetCouponsByUserStatusActive(user.UserId) != null)
+                {
+                    coupon.Email = user.Email;
+                    coupon.UserId = user.UserId;
+                    coupon.StoreId = store.StoreId;
+                    coupon.Discount = store.Discount;
+                    coupon.ActivationStatus = 1;
+                    coupon.DiscountDescription = store.ProductDescription;
+                    coupon.PeriodId = store.PeriodId;
+                    coupon.CreateDateTime = DateTime.Today;
+                }
+                //retornar mensaje de que ya tiene copones y no puede canjera hasta que pase la fecha
 
             }
         }
-
-
+       
 
     }
 }

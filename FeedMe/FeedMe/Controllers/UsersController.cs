@@ -84,7 +84,7 @@ namespace FeedMe.Controllers
             db.Users.Add(user);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = user.UserId }, user);
+            return CreatedAtRoute("DefaultApi", new {id = user.UserId}, user);
         }
 
         // DELETE: api/Users/5
@@ -116,6 +116,7 @@ namespace FeedMe.Controllers
         {
             return db.Users.Count(e => e.UserId == id) > 0;
         }
+
         public int EmailReview(string email)
         {
             List<User> userList = new List<User>();
@@ -138,6 +139,7 @@ namespace FeedMe.Controllers
             }
             return 0;
         }
+
         [ResponseType(typeof(string))]
         public IHttpActionResult InsertingPassword(string password)
         {
@@ -157,7 +159,7 @@ namespace FeedMe.Controllers
             return Content(HttpStatusCode.Accepted, "Ready!");
         }
 
-       
+
         //Incriptar contraseña
         [ResponseType(typeof(string))]
         public string PasswordEncrypt(string password)
@@ -174,7 +176,7 @@ namespace FeedMe.Controllers
             return encryptedPassword;
         }
 
-        
+
         //PasswordReview
         [ResponseType(typeof(string))]
         public bool PasswordReview(User user, string password)
@@ -184,5 +186,7 @@ namespace FeedMe.Controllers
 
             return false;
         }
+
+      
     }
 }
