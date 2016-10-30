@@ -229,6 +229,8 @@ namespace FeedMe.Controllers
         //Obtiene todos los cupones segun el storeId
         public List<Coupon> GetAllCuponByStore(int storeId)
         {
+            if (storeId == null)
+                return null;
             return db.Coupons
                 .Where(x => x.StoreId == storeId).ToList();
         }
