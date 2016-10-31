@@ -248,6 +248,7 @@
     <Compile Include="Controllers\Cuopon.cs" />
     <Compile Include="Controllers\FeedBacksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\mtpClient.cs" />
     <Compile Include="Controllers\PeriodTypesController.cs" />
     <Compile Include="Controllers\RolsController.cs" />
     <Compile Include="Controllers\StoresController.cs" />

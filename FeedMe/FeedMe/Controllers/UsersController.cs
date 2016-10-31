@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Http;
@@ -228,6 +229,11 @@ namespace FeedMe.Controllers
           return Content(HttpStatusCode.NotFound, "The email exist in the database,you must to write other email!");
        }
 
+       //Restaurar contraseña
+        public void Forgotpassword(string userEmail)
+        {
+            
+        }
         //Incriptar contraseña
         [ResponseType(typeof(string))]
         public string PasswordEncrypt(string password)
