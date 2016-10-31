@@ -167,9 +167,9 @@ namespace FeedMe.Controllers
 
             try
             {
-                if (usercinController.EmailReview(email) == null)
+                user= usercinController.EmailReview(email); //obtiene el usuario  a través del email que ya existe en la base de datos o que no existe para guardarlo
+                if ( user== null)
                 {
-
                     if (store == null)
                     {
                         throw new InvalidOperationException("You must to insert a Store information does not exist");
@@ -195,8 +195,7 @@ namespace FeedMe.Controllers
                 }
                 else
                 {
-                    user = usercinController.EmailReview(email);//obtiene el usuario  a través del email que ya existe en la base de datos
-                    if (GetCouponsByUserStatusActive(user.UserId) != null) //Verifca si tiene cupones activos
+                     if (GetCouponsByUserStatusActive(user.UserId) != null) //Verifca si tiene cupones activos
                     {
                         //Si no tiene ningún cupón activo
                         coupon.Email = user.Email;
