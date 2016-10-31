@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Security;
 using FeedMe;
 
 namespace FeedMe.Controllers
@@ -140,9 +141,14 @@ namespace FeedMe.Controllers
             return null;
         }
 
+        //Usuarios
         [ResponseType(typeof(string))]
-        public IHttpActionResult InsertingPassword(string password)
+        public IHttpActionResult InsertingUser(string email,string password,int roleId,int storeId)
         {
+            User user = new User();
+            Rol rol = db.Rols.Find(roleId);
+            Store store = db.Stores.Find(storeId);
+
             if (string.IsNullOrEmpty(password))
             {
                 return Content(HttpStatusCode.NotFound, "You must to write a password");
@@ -151,14 +157,34 @@ namespace FeedMe.Controllers
             {
                 return Content(HttpStatusCode.NotFound, "The password must be less than ten characters");
             }
-            else
+            if (EmailReview(email) == null)
             {
-                PasswordEncrypt(password);
-                //Then insert into data base , pero el post user solo resive un dato de que es "User"
-            }
-            return Content(HttpStatusCode.Accepted, "Ready!");
-        }
+                if (rol.RoleId == 2 || rol.RoleId == 3)
+                {
+                    password = PasswordEncrypt(password);
 
+                    user.Email = email;
+                    user.Passwordkey = password;
+                    user.Rol = rol;
+                    user.RoleId = rol.RoleId;
+                    user.Store = store;
+                    user.StoreId = storeId;
+
+                    PostUser(user);
+                    return Content(HttpStatusCode.Accepted, "Ready!");
+                }
+                    user.Passwordkey = "000";
+                    user.Rol = rol;
+                    user.RoleId = rol.RoleId;
+                    user.Store = store;
+                    user.StoreId = storeId;
+                    user.Email = email;
+
+                   PostUser(user);
+                   return Content(HttpStatusCode.Accepted, "Ready!");
+            }
+          return Content(HttpStatusCode.NotFound, "The email exist in the database,you must to write other email!");
+       }
 
         //Incriptar contraseña
         [ResponseType(typeof(string))]
