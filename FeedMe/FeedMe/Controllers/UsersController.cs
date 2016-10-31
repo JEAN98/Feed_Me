@@ -190,16 +190,12 @@ namespace FeedMe.Controllers
         [ResponseType(typeof(string))]
         public string PasswordEncrypt(string password)
         {
-            MD5CryptoServiceProvider encrypted = new MD5CryptoServiceProvider();
-            byte[] plainbytes = Encoding.ASCII.GetBytes(password);
+            SHA512Managed HashTool = new SHA512Managed();
+            Byte[] PhraseAsByte = System.Text.Encoding.UTF8.GetBytes(string.Concat(password));
+            Byte[] EncryptedPassword = HashTool.ComputeHash(PhraseAsByte);
+            HashTool.Clear();
 
-            encrypted.ComputeHash(plainbytes);
-
-            byte[] hashBytes = encrypted.Hash;
-
-            string encryptedPassword = BitConverter.ToString(hashBytes);
-
-            return encryptedPassword;
+            return Convert.ToBase64String(EncryptedPassword);
         }
 
         //PasswordReview

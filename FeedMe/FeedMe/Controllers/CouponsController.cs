@@ -115,7 +115,7 @@ namespace FeedMe.Controllers
             return db.Coupons.Count(e => e.CouponId == id) > 0;
         }
 
-        //DesactivarCouponv fix this
+        //Desactiva los cupones que ya han caducado 
         public bool DeactivateCoupon()
         {
             foreach (var cuopon in GetCoupons())
