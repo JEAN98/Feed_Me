@@ -15,7 +15,7 @@ namespace FeedMe.Controllers
     public class CouponsController : ApiController
     {
         private FeedMeEntities db = new FeedMeEntities();
-
+        
         // GET: api/Coupons
         public IQueryable<Coupon> GetCoupons()
         {
@@ -123,32 +123,43 @@ namespace FeedMe.Controllers
             if (cuopon == null)
                 return false;
 
-            DateTime ?valiDateTime = cuopon.CreateDateTime;
+            DateTime createDateTime = Convert.ToDateTime(cuopon.CreateDateTime);
+            int amount = Convert.ToInt32(cuopon.Amount);
                 
-            int ?caseSwitch = cuopon.PeriodId;
-
+            int caseSwitch = Convert.ToInt32(cuopon.PeriodId);
             
             //1= horas , 2=días, 3=Semanas,4=Meses
             switch (caseSwitch)
             {
                 case 1:
-                   
+                    if (createDateTime.AddHours(amount) > DateTime.Today)
+                    {
+                        return true;
+                    }
                     break;
                 case 2:
-                   
+                    if (createDateTime.AddDays(amount) > DateTime.Today)
+                    {
+                        return true;
+                    }
                     break;
                 default:
                    
                     break;
                 case 3:
-                   
+                    if (createDateTime.AddDays(amount * 7) > DateTime.Today)
+                    {
+                        return true;
+                    }
                     break;
                 case 4:
-                   
+                    if (createDateTime.AddMonths(amount) > DateTime.Today)
+                    {
+                        return true;
+                    }
                     break;
             }
-
-            return true;
+            return false;
         }
 
         public List<Coupon> GetCouponsByUserStatusActive(int userId)

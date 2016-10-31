@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FeedMeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FeedMeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Coupon">
           <Key>
             <PropertyRef Name="CouponId" />
@@ -15,6 +15,7 @@
           <Property Name="ActivationStatus" Type="int" />
           <Property Name="UserId" Type="int" />
           <Property Name="Email" Type="char" MaxLength="20" />
+          <Property Name="Amount" Type="int" />
           <Property Name="CreateDateTime" Type="datetime" />
           <Property Name="StoreId" Type="int" />
           <Property Name="PeriodId" Type="int" />
@@ -67,7 +68,7 @@
           <Property Name="RoleId" Type="int" />
           <Property Name="StoreId" Type="int" />
         </EntityType>
-        <Association Name="FK__Coupon__PeriodId__4AB81AF0">
+        <Association Name="FK__Coupon__PeriodId__5812160E">
           <End Role="PeriodType" Type="Self.PeriodType" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -79,7 +80,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Coupon__StoreId__49C3F6B7">
+        <Association Name="FK__Coupon__StoreId__571DF1D5">
           <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -91,7 +92,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Coupon__UserId__48CFD27E">
+        <Association Name="FK__Coupon__UserId__5629CD9C">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -158,15 +159,15 @@
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Coupon__PeriodId__4AB81AF0" Association="Self.FK__Coupon__PeriodId__4AB81AF0">
+          <AssociationSet Name="FK__Coupon__PeriodId__5812160E" Association="Self.FK__Coupon__PeriodId__5812160E">
             <End Role="PeriodType" EntitySet="PeriodType" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
-          <AssociationSet Name="FK__Coupon__StoreId__49C3F6B7" Association="Self.FK__Coupon__StoreId__49C3F6B7">
+          <AssociationSet Name="FK__Coupon__StoreId__571DF1D5" Association="Self.FK__Coupon__StoreId__571DF1D5">
             <End Role="Store" EntitySet="Store" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
-          <AssociationSet Name="FK__Coupon__UserId__48CFD27E" Association="Self.FK__Coupon__UserId__48CFD27E">
+          <AssociationSet Name="FK__Coupon__UserId__5629CD9C" Association="Self.FK__Coupon__UserId__5629CD9C">
             <End Role="User" EntitySet="User" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
@@ -187,8 +188,7 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FeedMeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -208,6 +208,7 @@
           <NavigationProperty Name="PeriodType" Relationship="Self.FK__Coupon__PeriodId__4AB81AF0" FromRole="Coupon" ToRole="PeriodType" />
           <NavigationProperty Name="Store" Relationship="Self.FK__Coupon__StoreId__49C3F6B7" FromRole="Coupon" ToRole="Store" />
           <NavigationProperty Name="User" Relationship="Self.FK__Coupon__UserId__48CFD27E" FromRole="Coupon" ToRole="User" />
+          <Property Name="Amount" Type="Int32" />
         </EntityType>
         <EntityType Name="FeedBack">
           <Key>
@@ -397,6 +398,7 @@
           <EntitySetMapping Name="Coupons">
             <EntityTypeMapping TypeName="FeedMeModel.Coupon">
               <MappingFragment StoreEntitySet="Coupon">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="CouponId" ColumnName="CouponId" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="DiscountDescription" ColumnName="DiscountDescription" />

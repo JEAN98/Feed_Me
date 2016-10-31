@@ -23,6 +23,7 @@ namespace FeedMe
         public Nullable<System.DateTime> CreateDateTime { get; set; }
         public Nullable<int> StoreId { get; set; }
         public Nullable<int> PeriodId { get; set; }
+        public Nullable<int> Amount { get; set; }
     
         public virtual PeriodType PeriodType { get; set; }
         public virtual Store Store { get; set; }
