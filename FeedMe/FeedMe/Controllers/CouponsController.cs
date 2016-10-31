@@ -176,7 +176,7 @@ namespace FeedMe.Controllers
                     }
                     user.Email = email;
                     user.Passwordkey = "0000";
-                    user.RoleId = 1;
+                    user.RoleId = 1;  //1=client, 2=users,3=Admin
                     user.StoreId = storeId;
 
                     db.Users.Add(user); //Lo inserta en la base de datos
@@ -195,13 +195,8 @@ namespace FeedMe.Controllers
                 }
                 else
                 {
-                    IQueryable<User> users = db.Users; //Obtiene una lista de todos los usuarios
-                    foreach (var getUser in users)
-                    {
-                        if (getUser.Email == email)
-                            user = getUser;
-                    }
-                    if (GetCouponsByUserStatusActive(user.UserId) != null)
+                    user = db.Users.Find(usercinController.EmailReview(email));//obtiene el usuario  a través del email que ya existe en la base de datos
+                    if (GetCouponsByUserStatusActive(user.UserId) != null) //Verifca si tiene cupones activos
                     {
                         //Si no tiene ningún cupón activo
                         coupon.Email = user.Email;
@@ -216,12 +211,13 @@ namespace FeedMe.Controllers
                         PostCoupon(coupon); //Asigna el copon para el usuario
                         return true;
                     }
-                    return false;
+                    //Sino es porque ya tiene algún cupón activo
+                    return false; 
                 }
             }
             catch (Exception exception)
             {
-                   throw;
+                throw new System.InvalidOperationException("" + exception);
             }
             return false;
             }
