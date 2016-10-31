@@ -140,6 +140,16 @@ namespace FeedMe.Controllers
             }
             return null;
         }
+        //Modificar Usuarios
+        [ResponseType(typeof(string))]
+        public IHttpActionResult UpdateUser(string email, string password, int roleId, int storeId)
+        {
+            User user = new User();
+            Rol rol = db.Rols.Find(roleId);
+            Store store = db.Stores.Find(storeId);
+
+            return Content(HttpStatusCode.NotFound, "The email exist in the database,you must to write other email!");
+        }
 
         //Insertar usuarios según su roleId
         [ResponseType(typeof(string))]
@@ -148,6 +158,15 @@ namespace FeedMe.Controllers
             User user = new User();
             Rol rol = db.Rols.Find(roleId);
             Store store = db.Stores.Find(storeId);
+
+            if (string.IsNullOrEmpty(password))
+            {
+                return Content(HttpStatusCode.NotFound, "You must to write a password");
+            }
+            if (password.Length > 10)
+            {
+                return Content(HttpStatusCode.NotFound, "The password must be less than ten characters");
+            }
 
             if (string.IsNullOrEmpty(password))
             {

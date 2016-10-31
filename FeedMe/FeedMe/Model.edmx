@@ -63,12 +63,12 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="20" />
-          <Property Name="Passwordkey" Type="varchar" MaxLength="40" />
+          <Property Name="Email" Type="varchar" MaxLength="40" />
+          <Property Name="Passwordkey" Type="varchar" MaxLength="100" />
           <Property Name="RoleId" Type="int" />
           <Property Name="StoreId" Type="int" />
         </EntityType>
-        <Association Name="FK__Coupon__PeriodId__5812160E">
+        <Association Name="FK__Coupon__PeriodId__6477ECF3">
           <End Role="PeriodType" Type="Self.PeriodType" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -80,7 +80,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Coupon__StoreId__571DF1D5">
+        <Association Name="FK__Coupon__StoreId__6383C8BA">
           <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -92,7 +92,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Coupon__UserId__5629CD9C">
+        <Association Name="FK__Coupon__UserId__628FA481">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -128,7 +128,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__RoleId__3E52440B">
+        <Association Name="FK__User__RoleId__5CD6CB2B">
           <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -140,7 +140,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__StoreId__3F466844">
+        <Association Name="FK__User__StoreId__5DCAEF64">
           <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -159,15 +159,15 @@
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Coupon__PeriodId__5812160E" Association="Self.FK__Coupon__PeriodId__5812160E">
+          <AssociationSet Name="FK__Coupon__PeriodId__6477ECF3" Association="Self.FK__Coupon__PeriodId__6477ECF3">
             <End Role="PeriodType" EntitySet="PeriodType" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
-          <AssociationSet Name="FK__Coupon__StoreId__571DF1D5" Association="Self.FK__Coupon__StoreId__571DF1D5">
+          <AssociationSet Name="FK__Coupon__StoreId__6383C8BA" Association="Self.FK__Coupon__StoreId__6383C8BA">
             <End Role="Store" EntitySet="Store" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
-          <AssociationSet Name="FK__Coupon__UserId__5629CD9C" Association="Self.FK__Coupon__UserId__5629CD9C">
+          <AssociationSet Name="FK__Coupon__UserId__628FA481" Association="Self.FK__Coupon__UserId__628FA481">
             <End Role="User" EntitySet="User" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
@@ -179,11 +179,11 @@
             <End Role="PeriodType" EntitySet="PeriodType" />
             <End Role="Store" EntitySet="Store" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__RoleId__3E52440B" Association="Self.FK__User__RoleId__3E52440B">
+          <AssociationSet Name="FK__User__RoleId__5CD6CB2B" Association="Self.FK__User__RoleId__5CD6CB2B">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__StoreId__3F466844" Association="Self.FK__User__StoreId__3F466844">
+          <AssociationSet Name="FK__User__StoreId__5DCAEF64" Association="Self.FK__User__StoreId__5DCAEF64">
             <End Role="Store" EntitySet="Store" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
@@ -261,8 +261,8 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Passwordkey" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Passwordkey" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="RoleId" Type="Int32" />
           <Property Name="StoreId" Type="Int32" />
           <NavigationProperty Name="Coupons" Relationship="Self.FK__Coupon__UserId__48CFD27E" FromRole="User" ToRole="Coupon" />
