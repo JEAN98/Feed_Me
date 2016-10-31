@@ -140,15 +140,46 @@ namespace FeedMe.Controllers
             }
             return null;
         }
+
         //Modificar Usuarios
         [ResponseType(typeof(string))]
-        public IHttpActionResult UpdateUser(string email, string password, int roleId, int storeId)
+        public IHttpActionResult ModifyProfiles(string oldemail, string newEmail, string oldpassword, string newpassword)
         {
-            User user = new User();
-            Rol rol = db.Rols.Find(roleId);
-            Store store = db.Stores.Find(storeId);
+            User user = EmailReview(oldemail);
+            try
+            {
+           
+            if (EmailReview(newEmail) != null)
+            {
+                return Content(HttpStatusCode.NotFound, "You must to write a other email,because "+newEmail+ " email exist in the database");
+            }
+            if (string.IsNullOrEmpty(newpassword))
+            {
+                return Content(HttpStatusCode.NotFound, "You must to write a password");
+            }
+            if (newpassword.Length > 10)
+            {
+                return Content(HttpStatusCode.NotFound, "The password must be less than ten characters");
+            }
+            if (user.Passwordkey != PasswordEncrypt(oldpassword))
+            {
+                return Content(HttpStatusCode.NotFound, "The password not match");
+            }
+            
+            user.Email = newEmail;
+            user.Passwordkey = PasswordEncrypt(newpassword);
+            user.RoleId = user.RoleId;
+            user.Rol = user.Rol;
+            user.StoreId = user.StoreId;
+            user.Store = user.Store;
 
-            return Content(HttpStatusCode.NotFound, "The email exist in the database,you must to write other email!");
+            PutUser(user.UserId,user);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return Content(HttpStatusCode.NotFound, "The email information has been updated in the data base");
         }
 
         //Insertar usuarios según su roleId
@@ -168,14 +199,6 @@ namespace FeedMe.Controllers
                 return Content(HttpStatusCode.NotFound, "The password must be less than ten characters");
             }
 
-            if (string.IsNullOrEmpty(password))
-            {
-                return Content(HttpStatusCode.NotFound, "You must to write a password");
-            }
-            if (password.Length > 10)
-            {
-                return Content(HttpStatusCode.NotFound, "The password must be less than ten characters");
-            }
             if (EmailReview(email) == null) //Para verficar si el email esta bien escrito ,se hará a nivel UI
             {
                 if (rol.RoleId == 2 || rol.RoleId == 3)
