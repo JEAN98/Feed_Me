@@ -117,7 +117,7 @@ namespace FeedMe.Controllers
             return db.Users.Count(e => e.UserId == id) > 0;
         }
 
-        public int EmailReview(string email)
+        public User EmailReview(string email)
         {
             List<User> userList = new List<User>();
 
@@ -128,7 +128,7 @@ namespace FeedMe.Controllers
                 {
                     if (user.Email == email)
                     {
-                        return user.UserId;
+                        return user;
                     }
                 }
             }
@@ -137,7 +137,7 @@ namespace FeedMe.Controllers
                 // ignored
                 throw new InvalidOperationException(exception.Message);
             }
-            return 0;
+            return null;
         }
 
         [ResponseType(typeof(string))]

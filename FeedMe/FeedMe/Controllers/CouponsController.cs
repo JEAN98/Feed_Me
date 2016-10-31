@@ -167,7 +167,7 @@ namespace FeedMe.Controllers
 
             try
             {
-                if (usercinController.EmailReview(email) == 0)
+                if (usercinController.EmailReview(email) == null)
                 {
 
                     if (store == null)
@@ -195,7 +195,7 @@ namespace FeedMe.Controllers
                 }
                 else
                 {
-                    user = db.Users.Find(usercinController.EmailReview(email));//obtiene el usuario  a través del email que ya existe en la base de datos
+                    user = usercinController.EmailReview(email);//obtiene el usuario  a través del email que ya existe en la base de datos
                     if (GetCouponsByUserStatusActive(user.UserId) != null) //Verifca si tiene cupones activos
                     {
                         //Si no tiene ningún cupón activo
