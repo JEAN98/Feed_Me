@@ -221,24 +221,6 @@ namespace FeedMe.Controllers
                 throw new Exception(ex.Message);
             }
         }
-
-        public void QR(string url)
-        {
-            try
-            {
-                string data = url;
-                QRCodeGenerator QCG = new QRCodeGenerator();
-                QRCodeGenerator.QRCode QC = QCG.CreateQrCode(data, QRCodeGenerator.ECCLevel.Q);
-                Bitmap bm = QC.GetGraphic(20);
-                MemoryStream ms = new MemoryStream();
-                bm.Save(ms, ImageFormat.Png);
-                byte[] b = ms.ToArray();
-                //img.ImageUrl = "data:image/png;base64," + Convert.ToBase64String(b);
-            }
-            catch(Exception exception)
-            {
-                throw new System.InvalidOperationException(""+exception);
-            }
-        }
+      
     }
 }
