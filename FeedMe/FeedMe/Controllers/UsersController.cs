@@ -141,7 +141,7 @@ namespace FeedMe.Controllers
             return null;
         }
 
-        //Usuarios
+        //Insertar usuarios según su roleId
         [ResponseType(typeof(string))]
         public IHttpActionResult InsertingUser(string email,string password,int roleId,int storeId)
         {
@@ -157,7 +157,7 @@ namespace FeedMe.Controllers
             {
                 return Content(HttpStatusCode.NotFound, "The password must be less than ten characters");
             }
-            if (EmailReview(email) == null)
+            if (EmailReview(email) == null) //Para verficar si el email esta bien escrito ,se hará a nivel UI
             {
                 if (rol.RoleId == 2 || rol.RoleId == 3)
                 {
@@ -202,7 +202,6 @@ namespace FeedMe.Controllers
             return encryptedPassword;
         }
 
-
         //PasswordReview
         [ResponseType(typeof(string))]
         public bool PasswordReview(User user, string password)
@@ -212,7 +211,5 @@ namespace FeedMe.Controllers
 
             return false;
         }
-
-      
     }
 }

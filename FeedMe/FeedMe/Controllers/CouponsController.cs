@@ -170,17 +170,12 @@ namespace FeedMe.Controllers
                 user= usercinController.EmailReview(email); //obtiene el usuario  a través del email que ya existe en la base de datos o que no existe para guardarlo
                 if ( user== null)
                 {
-
                     if (store == null)
                     {
                         throw new InvalidOperationException("You must to insert a Store information does not exist");
                     }
-                    user.Email = email;
-                    user.Passwordkey = "0000";
-                    user.RoleId = 1;  //1=client, 2=users,3=Admin
-                    user.StoreId = storeId;
 
-                    db.Users.Add(user); //Lo inserta en la base de datos
+                    usercinController.InsertingUser(email, "000", storeId,1); //Lo inserta en la base de datos
 
                     coupon.Email = user.Email;
                     coupon.UserId = user.UserId;
@@ -194,25 +189,22 @@ namespace FeedMe.Controllers
                     PostCoupon(coupon); //Asigna un copon para el usuario
                     return true;
                 }
-                else
+                if (GetCouponsByUserStatusActive(user.UserId) != null) //Verifca si tiene cupones activos
                 {
-                     if (GetCouponsByUserStatusActive(user.UserId) != null) //Verifca si tiene cupones activos
-                    {
-                        //Si no tiene ningún cupón activo
-                        coupon.Email = user.Email;
-                        coupon.UserId = user.UserId;
-                        coupon.StoreId = store.StoreId;
-                        coupon.Discount = store.Discount;
-                        coupon.ActivationStatus = 1;
-                        coupon.DiscountDescription = store.ProductDescription;
-                        coupon.PeriodId = store.PeriodId;
-                        coupon.CreateDateTime = DateTime.Today;
+                    //Si no tiene ningún cupón activo
+                    coupon.Email = user.Email;
+                    coupon.UserId = user.UserId;
+                    coupon.StoreId = store.StoreId;
+                    coupon.Discount = store.Discount;
+                    coupon.ActivationStatus = 1;
+                    coupon.DiscountDescription = store.ProductDescription;
+                    coupon.PeriodId = store.PeriodId;
+                    coupon.CreateDateTime = DateTime.Today;
 
-                        PostCoupon(coupon); //Asigna el copon para el usuario
-                        return true;
-                    }
-                    //Sino es porque ya tiene algún cupón activo
+                    PostCoupon(coupon); //Asigna el copon para el usuario
+                    return true;
                 }
+                //Sino es porque ya tiene algún cupón activo
             }
             catch (Exception exception)
             {
