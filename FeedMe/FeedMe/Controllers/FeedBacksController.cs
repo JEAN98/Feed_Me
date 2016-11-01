@@ -5,14 +5,15 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using FeedMe;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using QRCoder;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using OpenQA.Selenium.Remote;
 
 namespace FeedMe.Controllers
 {
@@ -203,6 +204,49 @@ namespace FeedMe.Controllers
             return listOpinons;
         }
 
+        public void PDF(Coupon cuCoupon)
+        {
+            Document pdfDoc = new Document(PageSize.A4, 10, 10, 10, 10);
+
+            //try
+            //{
+            //    PdfWriter.GetInstance(pdfDoc, System.Web.HttpContext.Current.Response.OutputStream);
+
+            //    //Open PDF Document to write data 
+            //    pdfDoc.Open();
+
+
+            //    string cadenaFinal = "Hey";
+
+            //    //Assign Html content in a string to write in PDF 
+            //    string strContent = cadenaFinal;
+
+            //    //Read string contents using stream reader and convert html to parsed conent 
+            //    var parsedHtmlElements = HTMLWorker.ParseToList(new StringReader(strContent), null);
+
+            //    //Get each array values from parsed elements and add to the PDF document 
+            //    foreach (var htmlElement in parsedHtmlElements)
+            //        pdfDoc.Add(htmlElement as IElement);
+
+            //    //Close your PDF 
+            //    pdfDoc.Close();
+
+            //    Response.ContentType = "application/pdf";
+
+            //    //Set default file Name as current datetime 
+            //    Response.AddHeader("content-disposition", "attachment; filename=Cuopon.pdf");
+            //    System.Web.HttpContext.Current.Response.Write(pdfDoc);
+
+            //    Response.Flush();
+            //    Response.End();
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    Response.Write(ex.ToString());
+            //}
+
+        }
         public void GetGraph(string start, string end, int storeId)
         {
             try

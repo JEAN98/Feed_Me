@@ -21,6 +21,10 @@ namespace FeedMe.Controllers
         private FeedMeEntities db = new FeedMeEntities();
 
         // GET: api/Users
+
+
+
+
         public IQueryable<User> GetUsers()
         {
             return db.Users;
@@ -144,37 +148,36 @@ namespace FeedMe.Controllers
 
         //Modificar Usuarios
         [ResponseType(typeof(string))]
-        public IHttpActionResult ModifyProfiles(string oldemail, string newEmail, string oldpassword, string newpassword)
+        public IHttpActionResult ModifyProfiles(User user, string newEmail, string newpassword)
         {
-            User user = EmailReview(oldemail);
+            User modifyUser = EmailReview(user.Email);
             try
             {
-           
-            if (EmailReview(newEmail) != null)
-            {
-                return Content(HttpStatusCode.NotFound, "You must to write a other email,because "+newEmail+ " email exist in the database");
-            }
-            if (string.IsNullOrEmpty(newpassword))
-            {
-                return Content(HttpStatusCode.NotFound, "You must to write a password");
-            }
-            if (newpassword.Length > 10)
-            {
-                return Content(HttpStatusCode.NotFound, "The password must be less than ten characters");
-            }
-            if (user.Passwordkey != PasswordEncrypt(oldpassword))
-            {
-                return Content(HttpStatusCode.NotFound, "The password not match");
-            }
-            
-            user.Email = newEmail;
-            user.Passwordkey = PasswordEncrypt(newpassword);
-            user.RoleId = user.RoleId;
-            user.Rol = user.Rol;
-            user.StoreId = user.StoreId;
-            user.Store = user.Store;
+                if (EmailReview(newEmail) != null)
+                {
+                    return Content(HttpStatusCode.NotFound, "You must to write a other email,because "+newEmail+ " email exist in the database");
+                }
+                if (string.IsNullOrEmpty(newpassword))
+                {
+                    return Content(HttpStatusCode.NotFound, "You must to write a password");
+                }
+                if (newpassword.Length > 10)
+                {
+                    return Content(HttpStatusCode.NotFound, "The password must be less than ten characters");
+                }
+                if (user.Passwordkey != PasswordEncrypt(user.Passwordkey))
+                {
+                    return Content(HttpStatusCode.NotFound, "The password not match");
+                }
 
-            PutUser(user.UserId,user);
+                modifyUser.Email = newEmail;
+                modifyUser.Passwordkey = PasswordEncrypt(newpassword);
+                modifyUser.RoleId = user.RoleId;
+                modifyUser.Rol = user.Rol;
+                modifyUser.StoreId = user.StoreId;
+                modifyUser.Store = user.Store;
+
+                PutUser(modifyUser.UserId, modifyUser);
             }
             catch (Exception)
             {
@@ -236,7 +239,7 @@ namespace FeedMe.Controllers
         }
         //Incriptar contraseña
         [ResponseType(typeof(string))]
-        public string PasswordEncrypt(string password)
+        private string PasswordEncrypt(string password)
         {
             SHA512Managed HashTool = new SHA512Managed();
             Byte[] PhraseAsByte = System.Text.Encoding.UTF8.GetBytes(string.Concat(password));
