@@ -11,7 +11,8 @@ namespace FeedMe
 {
     using System;
     using System.Collections.Generic;
-    
+
+    [Serializable]
     public partial class FeedBack
     {
         public int FeedBackId { get; set; }

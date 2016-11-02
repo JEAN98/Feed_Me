@@ -19,14 +19,16 @@ namespace FeedMe.Controllers
         // GET: api/Coupons
         public IQueryable<Coupon> GetCoupons()
         {
+           
             return db.Coupons;
         }
 
         // GET: api/Coupons/5
         [ResponseType(typeof(Coupon))]
-        public IHttpActionResult GetCoupon(int id)
+        public IHttpActionResult GetCoupon(string email,int storeId,int id)
         {
-            Coupon coupon = db.Coupons.Find(id);
+            ExchangeCoupon(email, storeId);
+           Coupon coupon = db.Coupons.Find(id);
             if (coupon == null)
             {
                 return NotFound();
@@ -165,23 +167,26 @@ namespace FeedMe.Controllers
 
         public bool ExchangeCoupon(string email, int storeId)
         {
-            User user = new User();
-            UsersController usercinController = new UsersController();
-            Coupon coupon = new Coupon();
-            Store store = db.Stores.Find(storeId);
+            //El var detecta la clase o objeto y lo genera automaticamente
+            var usercinController = new UsersController();
+            var coupon = new Coupon();
+            var store = db.Stores.Find(storeId);
+            var user = new User();
 
             try
             {
-                user= usercinController.EmailReview(email); //obtiene el usuario  a través del email que ya existe en la base de datos o que no existe para guardarlo
-                if ( user== null)
+               //obtiene el usuario  a través del email que ya existe en la base de datos o que no existe para guardarlo
+                if (usercinController.EmailReview(email) == null)
                 {
                     if (store == null)
                     {
                         throw new InvalidOperationException("You must to insert a Store information does not exist");
                     }
+                    
                     user.Email = email;
                     user.StoreId = storeId;
                     user.RoleId = 1;
+                    user.Passwordkey = "000";
 
                     usercinController.InsertingUser(user); //Lo inserta en la base de datos
 

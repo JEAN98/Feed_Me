@@ -11,8 +11,9 @@ namespace FeedMe
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Coupon
+
+    [Serializable]
+    public  class Coupon
     {
         public int CouponId { get; set; }
         public Nullable<int> Discount { get; set; }
