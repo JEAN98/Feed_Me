@@ -179,8 +179,11 @@ namespace FeedMe.Controllers
                     {
                         throw new InvalidOperationException("You must to insert a Store information does not exist");
                     }
+                    user.Email = email;
+                    user.StoreId = storeId;
+                    user.RoleId = 1;
 
-                    usercinController.InsertingUser(email, "000", 1,storeId); //Lo inserta en la base de datos
+                    usercinController.InsertingUser(user); //Lo inserta en la base de datos
 
                     coupon.Email = user.Email;
                     coupon.UserId = user.UserId;
