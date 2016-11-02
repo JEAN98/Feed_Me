@@ -182,7 +182,7 @@ namespace FeedMe.Controllers
                     {
                         throw new InvalidOperationException("You must to insert a Store information does not exist");
                     }
-                    
+
                     user.Email = email;
                     user.StoreId = storeId;
                     user.RoleId = 1;
@@ -198,10 +198,14 @@ namespace FeedMe.Controllers
                     coupon.DiscountDescription = store.ProductDescription;
                     coupon.PeriodId = store.PeriodId;
                     coupon.CreateDateTime = DateTime.Today;
+                    coupon.Amount = store.Amount;
+                   
 
                     PostCoupon(coupon); //Asigna un copon para el usuario
                     return true;
                 }
+                  user = usercinController.EmailReview(email);
+
                 if (GetCouponsByUserStatusActive(user.UserId) != null) //Verifca si tiene cupones activos
                 {
                     //Si no tiene ningún cupón activo
@@ -213,6 +217,7 @@ namespace FeedMe.Controllers
                     coupon.DiscountDescription = store.ProductDescription;
                     coupon.PeriodId = store.PeriodId;
                     coupon.CreateDateTime = DateTime.Today;
+                    coupon.Amount=store.Amount;
 
                     PostCoupon(coupon); //Asigna el copon para el usuario
                     return true;
@@ -222,7 +227,7 @@ namespace FeedMe.Controllers
             catch (Exception exception)
             {
                 throw new System.InvalidOperationException("" + exception);
-            }
+            }   
             return false;
             }
 

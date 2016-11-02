@@ -188,8 +188,8 @@ namespace FeedMe.Controllers
         [ResponseType(typeof(string))]
         public IHttpActionResult InsertingUser(User insertuser)
         {
-            Rol rol = db.Rols.Find(insertuser.RoleId);
-            Store store = db.Stores.Find(insertuser.StoreId);
+            //Rol rol = db.Rols.Find(insertuser.RoleId);
+            //Store store = db.Stores.Find(insertuser.StoreId);
             try
              {
                 if (string.IsNullOrEmpty(insertuser.Passwordkey))
@@ -203,26 +203,25 @@ namespace FeedMe.Controllers
 
                 if (EmailReview(insertuser.Email) == null) //Para verficar si el email esta bien escrito ,se hará a nivel UI
                 {
-
-                      if (rol.RoleId == 2 || rol.RoleId == 3)
+                    if (insertuser.RoleId == 2 || insertuser.RoleId == 3)
                         {
                              insertuser.Passwordkey = PasswordEncrypt(insertuser.Passwordkey);
                                     PostUser(insertuser);
 
                                 return Content(HttpStatusCode.Accepted, "Ready!");
-                         }
+                        }
                       else
-                      {
-                             insertuser.Passwordkey = "000";
+                         {
+                             insertuser.Passwordkey = PasswordEncrypt("000");
                                 PostUser(insertuser);
 
                                 return Content(HttpStatusCode.Accepted, "Ready!");
-                      }
+                         }
               } 
 
             }
-            catch (Exception)
-            {
+            catch (Exception exception)
+           {
 
                 throw;
             }

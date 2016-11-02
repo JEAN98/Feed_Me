@@ -11,24 +11,14 @@
           </Key>
           <Property Name="CouponId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Discount" Type="int" />
-          <Property Name="DiscountDescription" Type="varchar" MaxLength="50" />
+          <Property Name="DiscountDescription" Type="varchar" MaxLength="100" />
           <Property Name="ActivationStatus" Type="int" />
           <Property Name="UserId" Type="int" />
-          <Property Name="Email" Type="char" MaxLength="20" />
+          <Property Name="Email" Type="char" MaxLength="100" />
           <Property Name="Amount" Type="int" />
           <Property Name="CreateDateTime" Type="datetime" />
           <Property Name="StoreId" Type="int" />
           <Property Name="PeriodId" Type="int" />
-        </EntityType>
-        <EntityType Name="FeedBack">
-          <Key>
-            <PropertyRef Name="FeedBackId" />
-          </Key>
-          <Property Name="FeedBackId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StoreId" Type="int" />
-          <Property Name="Face" Type="int" />
-          <Property Name="Opinion" Type="varchar" MaxLength="200" />
-          <Property Name="CreationDate" Type="datetime" />
         </EntityType>
         <EntityType Name="PeriodType">
           <Key>
@@ -54,6 +44,7 @@
           <Property Name="UrlName" Type="varchar" MaxLength="30" />
           <Property Name="CodName" Type="varchar" MaxLength="20" />
           <Property Name="Discount" Type="int" />
+          <Property Name="Amount" Type="int" />
           <Property Name="Percentage" Type="float" />
           <Property Name="ProductDescription" Type="varchar" MaxLength="100" />
           <Property Name="PeriodId" Type="int" />
@@ -63,12 +54,12 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="40" />
-          <Property Name="Passwordkey" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Passwordkey" Type="varchar" MaxLength="1000" />
           <Property Name="RoleId" Type="int" />
           <Property Name="StoreId" Type="int" />
         </EntityType>
-        <Association Name="FK__Coupon__PeriodId__6477ECF3">
+        <Association Name="FK__Coupon__PeriodId__1BC821DD">
           <End Role="PeriodType" Type="Self.PeriodType" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -80,7 +71,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Coupon__StoreId__6383C8BA">
+        <Association Name="FK__Coupon__StoreId__1AD3FDA4">
           <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -92,7 +83,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Coupon__UserId__628FA481">
+        <Association Name="FK__Coupon__UserId__19DFD96B">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
           <ReferentialConstraint>
@@ -104,19 +95,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__FeedBack__StoreI__440B1D61">
-          <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
-          <End Role="FeedBack" Type="Self.FeedBack" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Store">
-              <PropertyRef Name="StoreId" />
-            </Principal>
-            <Dependent Role="FeedBack">
-              <PropertyRef Name="StoreId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Store__PeriodId__38996AB5">
+        <Association Name="FK__Store__PeriodId__778AC167">
           <End Role="PeriodType" Type="Self.PeriodType" Multiplicity="0..1" />
           <End Role="Store" Type="Self.Store" Multiplicity="*" />
           <ReferentialConstraint>
@@ -128,7 +107,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__RoleId__5CD6CB2B">
+        <Association Name="FK__User__RoleId__14270015">
           <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -140,7 +119,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__User__StoreId__5DCAEF64">
+        <Association Name="FK__User__StoreId__151B244E">
           <End Role="Store" Type="Self.Store" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
@@ -154,36 +133,31 @@
         </Association>
         <EntityContainer Name="FeedMeModelStoreContainer">
           <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FeedBack" EntityType="Self.FeedBack" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PeriodType" EntityType="Self.PeriodType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Store" EntityType="Self.Store" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Coupon__PeriodId__6477ECF3" Association="Self.FK__Coupon__PeriodId__6477ECF3">
+          <AssociationSet Name="FK__Coupon__PeriodId__1BC821DD" Association="Self.FK__Coupon__PeriodId__1BC821DD">
             <End Role="PeriodType" EntitySet="PeriodType" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
-          <AssociationSet Name="FK__Coupon__StoreId__6383C8BA" Association="Self.FK__Coupon__StoreId__6383C8BA">
+          <AssociationSet Name="FK__Coupon__StoreId__1AD3FDA4" Association="Self.FK__Coupon__StoreId__1AD3FDA4">
             <End Role="Store" EntitySet="Store" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
-          <AssociationSet Name="FK__Coupon__UserId__628FA481" Association="Self.FK__Coupon__UserId__628FA481">
+          <AssociationSet Name="FK__Coupon__UserId__19DFD96B" Association="Self.FK__Coupon__UserId__19DFD96B">
             <End Role="User" EntitySet="User" />
             <End Role="Coupon" EntitySet="Coupon" />
           </AssociationSet>
-          <AssociationSet Name="FK__FeedBack__StoreI__440B1D61" Association="Self.FK__FeedBack__StoreI__440B1D61">
-            <End Role="Store" EntitySet="Store" />
-            <End Role="FeedBack" EntitySet="FeedBack" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Store__PeriodId__38996AB5" Association="Self.FK__Store__PeriodId__38996AB5">
+          <AssociationSet Name="FK__Store__PeriodId__778AC167" Association="Self.FK__Store__PeriodId__778AC167">
             <End Role="PeriodType" EntitySet="PeriodType" />
             <End Role="Store" EntitySet="Store" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__RoleId__5CD6CB2B" Association="Self.FK__User__RoleId__5CD6CB2B">
+          <AssociationSet Name="FK__User__RoleId__14270015" Association="Self.FK__User__RoleId__14270015">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <AssociationSet Name="FK__User__StoreId__5DCAEF64" Association="Self.FK__User__StoreId__5DCAEF64">
+          <AssociationSet Name="FK__User__StoreId__151B244E" Association="Self.FK__User__StoreId__151B244E">
             <End Role="Store" EntitySet="Store" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
@@ -198,10 +172,10 @@
           </Key>
           <Property Name="CouponId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Discount" Type="Int32" />
-          <Property Name="DiscountDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DiscountDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ActivationStatus" Type="Int32" />
           <Property Name="UserId" Type="Int32" />
-          <Property Name="Email" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
           <Property Name="CreateDateTime" Type="DateTime" Precision="3" />
           <Property Name="StoreId" Type="Int32" />
           <Property Name="PeriodId" Type="Int32" />
@@ -255,14 +229,15 @@
           <NavigationProperty Name="FeedBacks" Relationship="Self.FK__FeedBack__StoreI__440B1D61" FromRole="Store" ToRole="FeedBack" />
           <NavigationProperty Name="PeriodType" Relationship="Self.FK__Store__PeriodId__38996AB5" FromRole="Store" ToRole="PeriodType" />
           <NavigationProperty Name="Users" Relationship="Self.FK__User__StoreId__3F466844" FromRole="Store" ToRole="User" />
+          <Property Name="Amount" Type="Int32" />
         </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="Passwordkey" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Passwordkey" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="RoleId" Type="Int32" />
           <Property Name="StoreId" Type="Int32" />
           <NavigationProperty Name="Coupons" Relationship="Self.FK__Coupon__UserId__48CFD27E" FromRole="User" ToRole="Coupon" />
@@ -411,17 +386,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FeedBacks">
-            <EntityTypeMapping TypeName="FeedMeModel.FeedBack">
-              <MappingFragment StoreEntitySet="FeedBack">
-                <ScalarProperty Name="FeedBackId" ColumnName="FeedBackId" />
-                <ScalarProperty Name="StoreId" ColumnName="StoreId" />
-                <ScalarProperty Name="Face" ColumnName="Face" />
-                <ScalarProperty Name="Opinion" ColumnName="Opinion" />
-                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PeriodTypes">
             <EntityTypeMapping TypeName="FeedMeModel.PeriodType">
               <MappingFragment StoreEntitySet="PeriodType">
@@ -443,6 +407,7 @@
           <EntitySetMapping Name="Stores">
             <EntityTypeMapping TypeName="FeedMeModel.Store">
               <MappingFragment StoreEntitySet="Store">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="StoreId" ColumnName="StoreId" />
                 <ScalarProperty Name="UrlName" ColumnName="UrlName" />
                 <ScalarProperty Name="CodName" ColumnName="CodName" />

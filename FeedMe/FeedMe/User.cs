@@ -11,9 +11,8 @@ namespace FeedMe
 {
     using System;
     using System.Collections.Generic;
-
-    [Serializable]
-    public class User
+    
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
