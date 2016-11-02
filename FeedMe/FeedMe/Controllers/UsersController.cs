@@ -22,9 +22,6 @@ namespace FeedMe.Controllers
 
         // GET: api/Users
 
-
-
-
         public IQueryable<User> GetUsers()
         {
             return db.Users;
@@ -155,7 +152,8 @@ namespace FeedMe.Controllers
             {
                 if (EmailReview(newEmail) != null)
                 {
-                    return Content(HttpStatusCode.NotFound, "You must to write a other email,because "+newEmail+ " email exist in the database");
+                    return Content(HttpStatusCode.NotFound,
+                        "You must to write a other email,because " + newEmail + " email exist in the database");
                 }
                 if (string.IsNullOrEmpty(newpassword))
                 {
@@ -188,48 +186,47 @@ namespace FeedMe.Controllers
 
         //Insertar usuarios según su roleId
         [ResponseType(typeof(string))]
-        public IHttpActionResult InsertingUser(string email,string password,int roleId,int storeId)
+        public IHttpActionResult InsertingUser(User insertuser)
         {
-            User user = new User();
-            Rol rol = db.Rols.Find(roleId);
-            Store store = db.Stores.Find(storeId);
-
-            if (string.IsNullOrEmpty(password))
-            {
-                return Content(HttpStatusCode.NotFound, "You must to write a password");
-            }
-            if (password.Length > 10)
-            {
-                return Content(HttpStatusCode.NotFound, "The password must be less than ten characters");
-            }
-
-            if (EmailReview(email) == null) //Para verficar si el email esta bien escrito ,se hará a nivel UI
-            {
-                if (rol.RoleId == 2 || rol.RoleId == 3)
+            Rol rol = db.Rols.Find(insertuser.RoleId);
+            Store store = db.Stores.Find(insertuser.StoreId);
+            try
+             {
+                if (string.IsNullOrEmpty(insertuser.Passwordkey))
                 {
-                    password = PasswordEncrypt(password);
-
-                    user.Email = email;
-                    user.Passwordkey = password;
-                    user.Rol = rol;
-                    user.RoleId = rol.RoleId;
-                    user.Store = store;
-                    user.StoreId = storeId;
-
-                    PostUser(user);
-                    return Content(HttpStatusCode.Accepted, "Ready!");
+                    return Content(HttpStatusCode.NotFound, "You must to write a password");
                 }
-                    user.Passwordkey = "000";
-                    user.Rol = rol;
-                    user.RoleId = rol.RoleId;
-                    user.Store = store;
-                    user.StoreId = storeId;
-                    user.Email = email;
+                if (insertuser.Passwordkey.Length > 10)
+                {
+                    return Content(HttpStatusCode.NotFound, "The password must be less than ten characters");
+                }
 
-                   PostUser(user);
-                   return Content(HttpStatusCode.Accepted, "Ready!");
+                if (EmailReview(insertuser.Email) == null) //Para verficar si el email esta bien escrito ,se hará a nivel UI
+                {
+
+                      if (rol.RoleId == 2 || rol.RoleId == 3)
+                        {
+                             insertuser.Passwordkey = PasswordEncrypt(insertuser.Passwordkey);
+                                    PostUser(insertuser);
+
+                                return Content(HttpStatusCode.Accepted, "Ready!");
+                         }
+                      else
+                      {
+                             insertuser.Passwordkey = "000";
+                                PostUser(insertuser);
+
+                                return Content(HttpStatusCode.Accepted, "Ready!");
+                      }
+              } 
+
             }
-          return Content(HttpStatusCode.NotFound, "The email exist in the database,you must to write other email!");
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Content(HttpStatusCode.NotFound, "The email exist in the database,you must to write other email!");
        }
 
        //Restaurar contraseña
